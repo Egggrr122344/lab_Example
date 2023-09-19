@@ -1,5 +1,5 @@
 
-#include "include.h"
+#include "function.h"
 
 void Print_Arr(char *arr, const int size) {
     cout << '[';
