@@ -5,7 +5,7 @@ int main () {
     unsigned long  int num; // number
     cout << "Enter your number: \n";
     cin >> num;
-    string Arr_Str{Get_To_Str(num)}; // return string
+    string  {Get_To_Str(num)}; // return string
     Follow(arr, Arr_Str, SIZE);
     Print_Arr(arr, SIZE);
 
