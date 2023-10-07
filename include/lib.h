@@ -4,41 +4,30 @@
 using namespace std;
 
 // Описание  класса
-
 class Money {
 private:
-    unsigned char* amount; // Хранение денежной суммы
+    unsigned char* amount; // Указатель на динамический массив для хранения денежной суммы
     size_t size; // Размер массива
 
-
 public:
-    Money(); // Конструктор по умолчанию создает объект с нулевым значением
-    Money(const size_t & n, unsigned char t = 0) : size(n);
-    Money(const initializer_list <unsigned char> &t) : size(t.size()); // Конструктор принимающий массив элементов и создающий объект
-    Money(const string& t ) : size(t.length());
-    Money(const Money& other) : size(other.size); // создание копии объекта Money
-    Money(Money&& other) noexcept : amount(other.amount), size(other.size);
+    // Конструкторы
+    Money();
+    Money(const size_t& size, unsigned char t = 0);
+    Money(const std::initializer_list<unsigned char>& t);
+    Money(const Money& other);
+    Money(Money&& other) noexcept;
+    ~Money();
 
-    virtual ~Money() noexcept;
+    // Методы
+    void setAmount(const std::initializer_list<unsigned char>& t);
+    void printAmount() const;
 
-    Money& operator =(const Money& other); // Операция присваивания объектов
-    Money operator +(const Money& other) const; // Операция сложения объектов
-    Money operator -(const Money& other) const; // Операция вычитания объектов
+    // Арифметические операции
+    Money operator+(const Money& other) const;
+    Money operator-(const Money& other) const;
 
-    bool operator ==(const Money& other) const; // Операция сравнения ==
-    bool operator <(const Money& other) const;
-    bool operator >(const Money& once) const;
-
-   
-    
-    size_t getSize();
-    string toString();
-
-
-    
-
-    ostream& print(ostream& os);
-
+    // Операции сравнения
+    bool operator>(const Money& other) const;
+    bool operator<(const Money& other) const;
+    bool operator==(const Money& other) const;
 };
-ostream &operator <<(ostream& os, const Money& object);
-
