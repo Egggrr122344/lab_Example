@@ -4,13 +4,17 @@ using namespace std;
 
 
 int main() {
-    Money money1 {1,2,3,4};
-    Money money2 {1,2,3};
-    Money money3;
+    Money money1 {1,2,5,3};
+    Money money2 {1,2,3,3};
+    Money money3 = money1.operator-(money2);
 
     money1.printAmount();
 
     money2.printAmount();
+
+    money3.printAmount();
+
+    
 
     money3.printAmount();
 

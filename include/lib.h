@@ -6,7 +6,7 @@ using namespace std;
 // Описание  класса
 class Money {
 private:
-    unsigned char* amount; // Указатель на динамический массив для хранения денежной суммы
+    unsigned char* amount; // Указатель на вектор для хранения денежной суммы
     size_t size; // Размер массива
 
 public:
@@ -25,9 +25,16 @@ public:
     // Арифметические операции
     Money operator+(const Money& other) const;
     Money operator-(const Money& other) const;
+    Money& operator=(const Money& other);
 
     // Операции сравнения
     bool operator>(const Money& other) const;
     bool operator<(const Money& other) const;
     bool operator==(const Money& other) const;
+
+    
+
+    size_t getSize (); 
+
+    unsigned char* getArray ();
 };

@@ -13,7 +13,7 @@
 // Конструктор с параметром
 Money::Money(const size_t& size, unsigned char t) {
     if (size == 0) {
-        throw std::invalid_argument("Size must be greater than 0");
+        throw invalid_argument("Size must be greater than 0");
     }
     this->size = size;
     amount = new unsigned char[size];
@@ -25,7 +25,7 @@ Money::Money(const size_t& size, unsigned char t) {
 // Конструктор с использованием initializer_list
 Money::Money(const std::initializer_list<unsigned char>& t) {
     if (t.size() == 0) {
-        throw std::invalid_argument("Initializer list must not be empty");
+        throw invalid_argument("Initializer list must not be empty");
     }
     size = t.size();
     amount = new unsigned char[size];
@@ -60,7 +60,7 @@ Money::~Money() {
 // Метод для установки значения денежной суммы с использованием initializer_list
 void Money::setAmount(const std::initializer_list<unsigned char>& t) {
     if (t.size() == 0) {
-        throw std::invalid_argument("Initializer list must not be empty");
+        throw invalid_argument("Initializer list must not be empty");
     }
     delete[] amount;
     size = t.size();
@@ -112,6 +112,21 @@ Money Money::operator+(const Money& other) const {
     }
     return result;
 }
+
+// Перегрузка оператора присваивания
+
+ Money& Money::operator=(const Money& other) {
+        if (this != &other) {
+            Money value(other.size);
+        
+        for (size_t i {0}; i < other.size; i ++) {
+            value.amount[i] = other.amount[i];
+        }
+
+        }
+        return *this;
+    }
+
 
 // Перегрузка оператора вычитания
 Money Money::operator-(const Money& other) const {
@@ -200,4 +215,12 @@ bool Money::operator==(const Money& other) const {
         }
         return true;
     }
+
+size_t Money::getSize() {
+    return size;
+}
+
+unsigned char* Money::getArray() {
+    return amount;
+}
 }   
