@@ -215,6 +215,7 @@ bool Money::operator==(const Money& other) const {
         }
         return true;
     }
+}
 
 size_t Money::getSize() {
     return size;
@@ -223,4 +224,4 @@ size_t Money::getSize() {
 unsigned char* Money::getArray() {
     return amount;
 }
-}   
+   

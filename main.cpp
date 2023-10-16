@@ -4,9 +4,10 @@ using namespace std;
 
 
 int main() {
-    Money money1 {1,2,5,3};
-    Money money2 {1,2,3,3};
+    Money money1 {0,0,5,5,5};
+    Money money2 {0,0,5,5,5};
     Money money3 = money1.operator-(money2);
+    Money money4 = money1.operator+(money2);
 
     money1.printAmount();
 
@@ -27,6 +28,8 @@ int main() {
     money1.operator+(money2).printAmount();  
 
     money1.operator-(money2).printAmount();
+    money4.printAmount();
+    
 
 
 }

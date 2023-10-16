@@ -18,7 +18,7 @@ public:
     Money(Money&& other) noexcept;
     ~Money();
 
-    // Методы
+    // Методы вставки и вывода
     void setAmount(const std::initializer_list<unsigned char>& t);
     void printAmount() const;
 
@@ -32,9 +32,8 @@ public:
     bool operator<(const Money& other) const;
     bool operator==(const Money& other) const;
 
-    
+    size_t getSize(); 
 
-    size_t getSize (); 
+    unsigned char* getArray();
 
-    unsigned char* getArray ();
 };
