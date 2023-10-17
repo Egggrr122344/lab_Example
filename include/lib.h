@@ -3,16 +3,16 @@
 #include <string>
 using namespace std;
 
-// Описание  класса
+
 class Money {
 private:
-    unsigned char* amount; // Указатель на массив для хранения денежной суммы
+    unsigned char* amount; // Указатель на массив для хранения денег
     size_t size; // Размер массива
 
 public:
-    // Конструкторы
+    
     Money();
-    Money(const size_t& size, unsigned char t = 0);
+    Money(const size_t& size, unsigned char t = 0 );
     Money(const initializer_list<unsigned char> &t);
     Money(const Money& other);
     Money(Money&& other) noexcept;

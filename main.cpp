@@ -1,6 +1,6 @@
 #include <iostream>
 #include "lib.h"
-using namespace std;
+
 
 
 int main() {
@@ -27,7 +27,7 @@ int main() {
 
     money1.operator+(money2).printAmount();  
 
-    money1.operator-(money2).printAmount();
+    
     money4.printAmount();
     
 

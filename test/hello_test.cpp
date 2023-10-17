@@ -1,6 +1,38 @@
 #include <gtest/gtest.h>
 #include <lib.h>
 
+TEST(firstConstructorTest, BasicAssertions) {
+  // arrange 
+  Money money1 {};
+  
+
+  // assert
+  
+    EXPECT_EQ (money1.getArray(), nullptr);
+    EXPECT_EQ (money1.getSize(), 0);
+  
+}
+
+TEST(SecondConstructorTest, BasicAssertions) {
+  // arrange
+   Money money1(3,5);
+
+   // assert
+
+   EXPECT_EQ (money1.getSize(),3);
+   EXPECT_EQ (money1.getArray()[0],5);
+   
+}
+
+TEST(diffError, BasicAssertions) {
+  // arrange
+  Money money1 {1,2,3,4};
+  Money money2 {5,6,7,8};
+
+  // assert
+  EXPECT_THROW (money1.operator-(money2), invalid_argument);
+}
+
 
 TEST(DiffTest1, BasicAssertions) {
   // arrange 
@@ -131,7 +163,7 @@ TEST(copyTest, BasicAssertions) {
 }
 
 
-TEST(inAmount, BasicAssertions) {
+TEST(SetAmount, BasicAssertions) {
   // arrange
   Money money1;
   
@@ -147,5 +179,35 @@ TEST(inAmount, BasicAssertions) {
   }
     
   
+}
+
+TEST(setError, BasicAssertions) {
+  // arrange
+  Money money1;
+
+  size_t arrSize = 0;
+  unsigned char result[] {};
+
+  // assert
+  EXPECT_THROW(money1.setAmount({}), invalid_argument);
+}
+
+TEST(movingTest, BasicAssertions) {
+  // arrange
+  Money money1 (2,3);
+
+  // act
+  Money money2 (move(money1));
+
+  // assert
+  EXPECT_EQ(money1.getArray(), nullptr);
+  EXPECT_EQ(money1.getSize(), 0);
+
+  for (size_t i {0}; i < 2; i++) {
+    EXPECT_EQ(money2.getArray()[i], 3);
+  }
+  
+  EXPECT_EQ(money2.getSize(),2);
+
 }
 

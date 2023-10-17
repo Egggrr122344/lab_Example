@@ -4,12 +4,12 @@
 #include <stdexcept>
 
   Money::Money() {
-    size = 1;
-    amount = new unsigned char[size];
-    amount[0] = 0;
+    size = 0;
+    amount = nullptr;
+    
 }
 
-// Конструктор с параметром
+// Конструктор с параметром t
 Money::Money(const size_t& size, unsigned char t) {
     if (size == 0) {
         throw invalid_argument("Size must be greater than 0");
@@ -49,6 +49,7 @@ Money::Money(Money&& other) noexcept {
     size = other.size;
     amount = other.amount;
     other.amount = nullptr;
+    other.size = 0;
 }
 
 // Деструктор
@@ -56,7 +57,7 @@ Money::~Money() {
     delete[] amount;
 }
 
-// Метод для установки значения денежной суммы с использованием initializer_list
+// Метод для установки значения денежной суммы с использованием списка инициализации
 void Money::setAmount(const initializer_list<unsigned char>& t) {
     if (t.size() == 0) {
         throw invalid_argument("Initializer list must not be empty");
