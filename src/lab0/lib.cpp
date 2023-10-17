@@ -2,7 +2,6 @@
 #include "lib.h"
 #include <exception>
 #include <stdexcept>
-#include <vector>
 
   Money::Money() {
     size = 1;
@@ -23,7 +22,7 @@ Money::Money(const size_t& size, unsigned char t) {
 }
 
 // Конструктор с использованием initializer_list
-Money::Money(const std::initializer_list<unsigned char>& t) {
+Money::Money(const initializer_list<unsigned char>& t) {
     if (t.size() == 0) {
         throw invalid_argument("Initializer list must not be empty");
     }
@@ -58,7 +57,7 @@ Money::~Money() {
 }
 
 // Метод для установки значения денежной суммы с использованием initializer_list
-void Money::setAmount(const std::initializer_list<unsigned char>& t) {
+void Money::setAmount(const initializer_list<unsigned char>& t) {
     if (t.size() == 0) {
         throw invalid_argument("Initializer list must not be empty");
     }

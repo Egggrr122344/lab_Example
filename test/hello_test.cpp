@@ -60,10 +60,10 @@ TEST(SumTest1, BasicAssertions) {
 TEST(SumTest3, BasicAssertions) {
   // arrange
   Money money1 {0,0,5,5,5};
-  Money money2 {1,2,6,7,8};
+  Money money2 {1,2,6,7,8}; // 1431,21
 
-  unsigned char array[] {13,12,11,2,1};
-  size_t  arrSize = 5; 
+  unsigned char array[] {1,4,3,1,2,1};
+  size_t  arrSize = 6; 
 
   // act
   Money result = money1.operator+(money2);
@@ -129,3 +129,23 @@ TEST(copyTest, BasicAssertions) {
     EXPECT_EQ(money3,money1);
   
 }
+
+
+TEST(inAmount, BasicAssertions) {
+  // arrange
+  Money money1;
+  
+  size_t arrSize = 4;
+  unsigned char result[] {4,3,2,1};
+
+  // act
+  money1.setAmount({1,2,3,4});
+
+  // assert
+  for (size_t i {0}; i < arrSize; i++) {
+    EXPECT_EQ(money1.getArray()[i],result[arrSize-i-1]);
+  }
+    
+  
+}
+
