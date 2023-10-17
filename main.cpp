@@ -19,11 +19,7 @@ int main() {
 
     money3.printAmount();
 
-    cout << money1.operator<(money2) << endl;
-
-    cout << money1.operator>(money2) << endl;
-
-    cout << money1.operator==(money2) << endl; 
+    
 
     money1.operator+(money2).printAmount();  
 
