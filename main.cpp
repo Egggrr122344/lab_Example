@@ -15,12 +15,6 @@ int main() {
 
     money3.printAmount();
 
-    
-
-    money3.printAmount();
-
-    
-
     money1.operator+(money2).printAmount();  
 
     
