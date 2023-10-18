@@ -36,4 +36,6 @@ public:
 
     unsigned char* getArray();
 
+    bool helper(unsigned char* arr, size_t sizeArr); // для тестов сравнение объекта класса с массивом 
+
 };

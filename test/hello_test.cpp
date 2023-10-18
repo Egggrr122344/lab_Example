@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include <lib.h>
+#include <Money.h>
 
 TEST(firstConstructorTest, BasicAssertions) {
   // arrange 
@@ -44,11 +44,10 @@ TEST(DiffTest1, BasicAssertions) {
 
   // act
   Money result = money1.operator-(money2);
+  bool rez = true;
 
   // assert
-  for (size_t i {0}; i < result.getSize(); i++) {
-    EXPECT_EQ(result.getArray()[i], array[arrSize-i-1]);
-  }
+    EXPECT_EQ(result.helper(array, arrSize), rez);
 }
 
 TEST(DiffTest2, BasicAssertions) {
@@ -61,11 +60,11 @@ TEST(DiffTest2, BasicAssertions) {
 
   // act
   Money result = money2.operator-(money1);
+  bool rez = true;
 
   // assert
-  for (size_t i {0}; i < result.getSize(); i++) {
-    EXPECT_EQ(result.getArray()[i], array[arrSize-i-1]);
-  }
+  
+    EXPECT_EQ(result.helper(array, arrSize), rez);
 
 
 }
@@ -80,11 +79,10 @@ TEST(SumTest1, BasicAssertions) {
 
   // act
   Money result = money1.operator+(money2);
+  bool rez = true;
 
   // assert
-  for (size_t i {0}; i < result.getSize(); i++) {
-    EXPECT_EQ(result.getArray()[i], array[arrSize-i-1]);
-  }
+  EXPECT_EQ(result.helper(array, arrSize), rez);
     
   
 }
@@ -94,16 +92,15 @@ TEST(SumTest3, BasicAssertions) {
   Money money1 {0,0,5,5,5};
   Money money2 {1,2,6,7,8}; // 1431,21
 
-  unsigned char array[] {1,4,3,1,2,1};
+  unsigned char array[] {1,4,3,1,2,1}; // result
   size_t  arrSize = 6; 
 
   // act
-  Money result = money1.operator+(money2);
+  Money moneySum = money1.operator+(money2);
+  bool result = true;
 
   // assert
-  for (size_t i {0}; i < result.getSize(); i++) {
-    EXPECT_EQ(result.getArray()[i], array[arrSize-i-1]);
-  }
+  EXPECT_EQ(moneySum.helper(array,arrSize), result);
 }
 
 
@@ -167,16 +164,15 @@ TEST(SetAmount, BasicAssertions) {
   // arrange
   Money money1;
   
-  size_t arrSize = 4;
-  unsigned char result[] {4,3,2,1};
+  size_t sizeArray = 4;
+  unsigned char array[] {4,3,2,1};
 
   // act
   money1.setAmount({1,2,3,4});
 
   // assert
-  for (size_t i {0}; i < arrSize; i++) {
-    EXPECT_EQ(money1.getArray()[i],result[arrSize-i-1]);
-  }
+    EXPECT_EQ(money1.helper(array,sizeArray),true);
+  
     
   
 }
@@ -210,4 +206,6 @@ TEST(movingTest, BasicAssertions) {
   EXPECT_EQ(money2.getSize(),2);
 
 }
+
+
 

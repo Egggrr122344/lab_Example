@@ -1,5 +1,5 @@
 
-#include "lib.h"
+#include "Money.h"
 #include <exception>
 #include <stdexcept>
 
@@ -223,5 +223,18 @@ size_t Money::getSize() {
 
 unsigned char* Money::getArray() {
     return amount;
+}
+
+bool Money::helper(unsigned char* arr, size_t sizeArr) {
+    if (size != sizeArr) {
+        return false;
+    }
+
+    for (size_t i = 0; i < size; i++) {
+        if (amount[i] != arr[sizeArr-i-1]) {
+            return false;
+        }
+    }
+    return true;
 }
    
