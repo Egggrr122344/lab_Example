@@ -1,4 +1,3 @@
-
 #include "vector.hpp"
 #include <iostream>
 
@@ -150,4 +149,84 @@ T &Vector<T>::at(const size_t index) const {
 }
 
 template<typename T>
-T &Vector<T>::operato
+T &Vector<T>::operator[](const size_t index) const {
+    return this->Array[index];
+}
+
+template<typename T>
+T &Vector<T>::front() const {
+    return this->Array[0];
+}
+
+template<typename T>
+T &Vector<T>::back() const {
+    return this->Array[this->arraySize - 1];
+}
+
+template<typename T>
+bool Vector<T>::empty() const {
+    return this->arraySize == 0;
+}
+
+template<typename T>
+size_t Vector<T>::size() const {
+    return this->arraySize;
+}
+
+template<typename T>
+void Vector<T>::setSize(int v) {
+    arraySize = v;
+}
+
+template<typename T>
+size_t Vector<T>::capacity() const {
+    return this->arrayCapacity;
+}
+
+template<typename T>
+void Vector<T>::shrink_to_fit() {
+    if (this->arraySize == 0) {
+        this->reserve(1);
+        return;
+    }
+    this->reserve(this->arraySize);
+}
+
+template<typename T>
+void Vector<T>::clear() {
+    this->resize(0);
+}
+
+template<typename T>
+bool Vector<T>::operator==(const Vector<T> &otherVector) const {
+
+    if (otherVector.size() != this->arraySize) {
+        return false;
+    }
+
+    for (size_t currentValue = 0; currentValue < this->arraySize;
+         ++currentValue) {
+        if (otherVector[currentValue] != this->Array[currentValue]) {
+            return false;
+        }
+    }
+    return true;
+}
+
+template<typename T>
+T Vector<T>::getLastElement() const {
+    return this->Array[arraySize - 1];
+}
+
+template<typename T>
+bool Vector<T>::operator!=(const Vector<T> &otherVector) const {
+    return !this->operator==(otherVector);
+}
+
+template<typename T>
+Vector<T>::~Vector() {
+    for (size_t currentValue = 0; currentValue < this->arraySize;
+         ++currentValue) {
+        Array[currentValue].~T();
+    }
+    delete[] reinterpret_cast<char *>(this->Array);

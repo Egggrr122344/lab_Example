@@ -1,5 +1,4 @@
-#ifndef VECTOR_HPP
-#define VECTOR_HPP
+
 
 #include <iostream>
 #include <memory>
@@ -9,34 +8,34 @@ class Vector {
 public:
     Vector();
 
-    Vector(const size_t, const T & = T());
+    Vector(const size_t, const T & = T()); // конструктор, создающий вектор заданного размера и заполняющий его элементами типа T,
+    // по умолчанию инициализированными значениями
 
-    Vector(const Vector<T> &);
+    Vector(const Vector<T> &); // конструктор копирования
 
-    Vector(const std::initializer_list<T> &);
+    Vector(const std::initializer_list<T> &); // конструктор, принимающий список инициализации элементов типа T
 
-    Vector<T>(Vector<T> &&oth) noexcept;
+    Vector<T>(Vector<T> &&oth) noexcept; // конструктор перемещения
 
-    Vector<T> &operator=(const Vector<T> &);
+    Vector<T> &operator=(const Vector<T> &); // оператор присваивания
+    T &operator[](const size_t) const; // оператор доступа к элементу массива по индексу
 
-    void reserve(const size_t);
+    void reserve(const size_t); // выделяет память под кол-во элементов
 
-    void resize(const size_t, const T & = T());
+    void resize(const size_t, const T & = T()); // изменяет размер массива на нужное кол-во элементов
 
-    void push_back(const T &);
+    void push_back(const T &); // в конец
 
     template<typename... Args>
-    void emplace_back(const Args &...);
+    void emplace_back(const Args &...); // добавляет элемент в конец с использованием конструктура а не копирования
 
-    void pop_back();
+    void pop_back(); // берет с конца
 
-    T &at(const size_t) const;
+    T &at(const size_t) const; // возвращает ссылку на нужный элемент вектора с проверкой границ
 
-    T &operator[](const size_t) const;
+    T &front() const; // ссылка на первый элемент вектора
 
-    T &front() const;
-
-    T &back() const;
+    T &back() const; // ссылка на последний элемент
 
     bool empty() const;
 
@@ -44,24 +43,23 @@ public:
 
     void setSize(int);
 
-    size_t capacity() const;
+    size_t capacity() const; // возвращает емкость
 
-    void shrink_to_fit();
+    void shrink_to_fit(); // уменьшает емкость до его размера
 
-    void clear();
+    void clear(); // очищает
 
-    T getLastElement() const;
+    T getLastElement() const; 
 
     bool operator==(const Vector<T> &) const;
 
     bool operator!=(const Vector<T> &) const;
 
-    ~Vector();
+    ~Vector(); // удаление
 
 private:
-    size_t arraySize;
-    size_t arrayCapacity;
-    T *Array;
+    size_t arraySize; // размер
+    size_t arrayCapacity; // емкость
+    T *Array; // указатель на массив элементов 
 };
 
-#endif
