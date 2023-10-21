@@ -6,8 +6,8 @@ using namespace std;
 
 class Money {
 private:
-    unsigned char* amount; // Указатель на массив для хранения денег
-    size_t size; // Размер массива
+    unsigned char* amount; 
+    size_t size; 
 
 public:
     
@@ -18,16 +18,16 @@ public:
     Money(Money&& other) noexcept;
     ~Money();
 
-    // Методы вставки и вывода
+    
     void setAmount(const initializer_list<unsigned char> &t);
     void printAmount() const;
 
-    // Арифметические операции
+    
     Money operator+(const Money& other) const;
     Money operator-(const Money& other) const;
     Money& operator=(const Money& other);
 
-    // Операции сравнения
+    
     bool operator>(const Money& other) const;
     bool operator<(const Money& other) const;
     bool operator==(const Money& other) const;

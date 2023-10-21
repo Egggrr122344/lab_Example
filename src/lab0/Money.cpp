@@ -57,7 +57,7 @@ Money::~Money() {
     delete[] amount;
 }
 
-// Метод для установки значения денежной суммы с использованием списка инициализации
+// Метод для установки значения денежной суммы 
 void Money::setAmount(const initializer_list<unsigned char>& t) {
     if (t.size() == 0) {
         throw invalid_argument("Initializer list must not be empty");
