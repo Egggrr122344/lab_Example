@@ -84,7 +84,7 @@ void Money::printAmount() const {
     cout << endl;
 }
 
-// Перегрузка оператора сложения
+
 Money Money::operator+(const Money& other) const {
     size_t maxSize = max(size, other.size);
     size_t minSize = min(size, other.size);
@@ -128,7 +128,7 @@ Money Money::operator+(const Money& other) const {
     }
 
 
-// Перегрузка оператора вычитания
+
 Money Money::operator-(const Money& other) const {
     if (*this < other) {
         throw invalid_argument("Subtraction result is negative");
@@ -162,7 +162,7 @@ Money Money::operator-(const Money& other) const {
     return result;
 }
 
-// Перегрузка оператора больше
+
 bool Money::operator>(const Money& other) const {
     if (size > other.size) {
         return true;
@@ -182,7 +182,7 @@ bool Money::operator>(const Money& other) const {
     }
 }
 
-// Перегрузка оператора меньше
+
 bool Money::operator<(const Money& other) const {
     if (size < other.size) {
         return true;
@@ -202,7 +202,7 @@ bool Money::operator<(const Money& other) const {
     }
 }
 
-// Перегрузка оператора равно
+
 bool Money::operator==(const Money& other) const {
     if (size != other.size) {
         return false;
