@@ -230,3 +230,5 @@ Vector<T>::~Vector() {
         Array[currentValue].~T();
     }
     delete[] reinterpret_cast<char *>(this->Array);
+}
+  

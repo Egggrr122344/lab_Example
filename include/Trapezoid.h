@@ -1,31 +1,52 @@
 #pragma once
 
-#include <ostream>
 #include <iostream>
+#include <ostream>
 #include <utility>
 #include "BaseFigure.hpp"
-#include "vector.hpp"
 #include "FigureValidator.h"
+#include "vector.hpp"
 
 class Trapezoid : public BaseFigure {
 protected:
     Vector<Point> _points;
 
 public:
-    explicit Trapezoid(Vector<Point> &points) {
-        _points = points;
-    }
+    Trapezoid() = default;
+
+    explicit Trapezoid(Vector<Point> &points) { _points = points; }
 
     friend std::ostream &operator<<(std::ostream &os,
                                     const Trapezoid &trapezoid) {
         for (int i = 0; i < trapezoid._points.size(); i++) {
-            os << "(" << trapezoid._points[i].x << "," << trapezoid._points[i].y << ")";
+            os << "(" << trapezoid._points[i].x << "," << trapezoid._points[i].y
+               << ")";
         }
         return os;
     }
 
-    Vector<Point> GetPoints() {
-        return _points;
+    Vector<Point> GetPoints() { return _points; }
+
+    BaseFigure &operator=(BaseFigure &other) override {
+        _points = other.GetPoints();
+        return *this;
+    }
+
+    BaseFigure &operator=(BaseFigure &&other) override {
+        _points = std::move(other.GetPoints());
+        return *this;
+    };
+
+    bool operator==(BaseFigure &other) override {
+        if (*this == other) {
+            return true;
+        }
+
+        if (typeid(Pentagon) != typeid(other)) {
+            return false;
+        }
+
+        return _points == other.GetPoints();
     }
 
     Point CalculateCenter() const override {
@@ -65,5 +86,4 @@ public:
 
         return Trapezoid(points);
     }
-
 };
