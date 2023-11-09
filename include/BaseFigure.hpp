@@ -2,7 +2,7 @@
 
 #include <iostream>
 #include "vector.hpp"
-//  структура точки
+
 struct Point {
    double x;
    double y;

@@ -3,7 +3,6 @@
 #include "IFigureValidator.h"
 #include "Trapezoid.h"
 #include <typeinfo>
-#include <math.h>
 
 class TrapezoidValidator : public IFigureValidator {
 public:

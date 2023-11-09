@@ -2,7 +2,6 @@
 
 #include "IFigureValidator.h"
 #include "Rombus.h"
-#include <math.h>
 
 class RombusValidator : public IFigureValidator {
   public:

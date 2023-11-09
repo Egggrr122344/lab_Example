@@ -1,9 +1,10 @@
 #pragma once
 
 #include <ostream>
-#include "BaseFigure.hpp"
-#include "FigureValidator.h"
+#include "./BaseFigure.hpp"
+#include "./FigureValidator.h"
 #include "vector.hpp"
+#include <cmath>
 
 class Rombus : public BaseFigure {
   protected:

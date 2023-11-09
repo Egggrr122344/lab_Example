@@ -3,9 +3,10 @@
 #include <iostream>
 #include <ostream>
 #include <utility>
-#include "BaseFigure.hpp"
-#include "FigureValidator.h"
+#include "../include/BaseFigure.hpp"
+#include "../include/FigureValidator.h"
 #include "vector.hpp"
+#include <cmath>
 
 class Trapezoid : public BaseFigure {
 protected:

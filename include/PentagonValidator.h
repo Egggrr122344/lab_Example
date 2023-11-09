@@ -2,7 +2,7 @@
 
 #include "IFigureValidator.h"
 #include "Pentagon.h"
-#include <math.h>
+#include <cmath>
 
 class PentagonValidator : public IFigureValidator {
   public:
@@ -30,6 +30,6 @@ class PentagonValidator : public IFigureValidator {
    }
 
    bool IsAllowedFor(const std::type_info &type) override {
-      return typeid(Pentagon) == type;
+      return typeid(Pentagon::Pentagon) == type;
    }
 };
