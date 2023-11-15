@@ -13,8 +13,8 @@ Point Point:: createPoint(double x, double y) {
 }
 
 double Point:: dist(const Point& p1, const Point& p2) {
-    double distX = p1.getX() - p2.getX();
-    double distY = p1.getY() - p2.getY();
+    double distX = p2.getX() - p1.getX();
+    double distY = p2.getY() - p1.getY();
 
     double distance = std::sqrt(distX * distX + distY * distY);
     return distance;

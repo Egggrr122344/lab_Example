@@ -43,28 +43,8 @@ const Point& p8
     double center_p6 = Point::dist(center,p6);
     double center_p7 = Point::dist(center,p7);
     double center_p8 = Point::dist(center,p8);
-    
 
-    if (dist_p1p2 > exception && 
-        dist_p2p3 > exception && 
-        dist_p3p4 > exception &&
-        dist_p4p5 > exception && 
-        dist_p5p6 > exception &&
-        dist_p6p7 > exception &&
-        dist_p7p8 > exception &&
-        dist_p1p8 > exception
-        ) 
-        {
-            if (abs(dist_p1p2 - dist_p2p3) < exception &&
-                abs(dist_p2p3 - dist_p3p4) < exception &&
-                abs(dist_p3p4 - dist_p4p5) < exception &&
-                abs(dist_p4p5 - dist_p5p6) < exception &&
-                abs(dist_p5p6 - dist_p6p7) < exception &&
-                abs(dist_p6p7 - dist_p7p8) < exception &&
-                abs(dist_p7p8 - dist_p1p8) < exception 
-                )
-            {
-                if (abs (center_p1 - center_p2) < exception &&
+    if (abs (center_p1 - center_p2) < exception &&
                     abs (center_p2 - center_p3) < exception &&
                     abs (center_p3 - center_p4) < exception &&
                     abs (center_p4 - center_p5) < exception &&
@@ -75,12 +55,45 @@ const Point& p8
                 {
                     return true;
                 }
+              return false;
+    
 
-            }
+    // if (dist_p1p2 > exception && 
+    //     dist_p2p3 > exception && 
+    //     dist_p3p4 > exception &&
+    //     dist_p4p5 > exception && 
+    //     dist_p5p6 > exception &&
+    //     dist_p6p7 > exception &&
+    //     dist_p7p8 > exception &&
+    //     dist_p1p8 > exception
+    //     ) 
+    //     {
+    //         if (abs(dist_p1p2 - dist_p2p3) < exception &&
+    //             abs(dist_p2p3 - dist_p3p4) < exception &&
+    //             abs(dist_p3p4 - dist_p4p5) < exception &&
+    //             abs(dist_p4p5 - dist_p5p6) < exception &&
+    //             abs(dist_p5p6 - dist_p6p7) < exception &&
+    //             abs(dist_p6p7 - dist_p7p8) < exception &&
+    //             abs(dist_p7p8 - dist_p1p8) < exception 
+    //             )
+    //         {
+    //             if (abs (center_p1 - center_p2) < exception &&
+    //                 abs (center_p2 - center_p3) < exception &&
+    //                 abs (center_p3 - center_p4) < exception &&
+    //                 abs (center_p4 - center_p5) < exception &&
+    //                 abs (center_p5 - center_p6) < exception &&
+    //                 abs (center_p6 - center_p7) < exception &&
+    //                 abs (center_p7 - center_p8) < exception 
+    //                 )
+    //             {
+    //                 return true;
+    //             }
 
-        }
+    //         }
 
-        return false;
+    //     }
+
+    //     return false;
 }
 
 
