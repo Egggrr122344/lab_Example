@@ -4,10 +4,11 @@
 #include <iostream>
 #include "Vector.h"
 #include "Point.h"
+#include "/com.docker.devenvironments.code/src/lab0/Vector.cpp"
 class Figure {
     public:
-        virtual Point center() const = 0;
-        virtual operator double() const = 0;
+        virtual Point calculateCentre() const = 0; // calculate centre
+        virtual operator double() const = 0; // calculate area
 
     protected:
         Vector<Point> points;

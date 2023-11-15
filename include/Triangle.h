@@ -9,7 +9,7 @@ class Triangle : public Figure {
     public:
         Triangle(const Point& p1, const Point& p2, const Point& p3);
 
-        Point center() const override;
+        Point calculateCentre() const override;
         operator double() const override;
 
         friend ostream& operator<< (ostream& out, const Triangle& triangle);

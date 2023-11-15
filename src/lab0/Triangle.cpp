@@ -1,4 +1,5 @@
 #include "Triangle.h"
+
 #include <cmath>
 
 using namespace std;
@@ -17,7 +18,7 @@ bool Triangle:: validate(const Point& p1, const Point& p2, const Point& p3) noex
 
     double p1_p2 = Point::dist(p1,p2);
     double p2_p3 = Point::dist(p2,p3);
-    double p1_p3 = Point::dist(p3,p3);
+    double p1_p3 = Point::dist(p1,p3);
 
     // distance from center
 
@@ -46,7 +47,7 @@ bool Triangle:: validate(const Point& p1, const Point& p2, const Point& p3) noex
 // Валидация на соответствие свойства треугольника
 }
 
-Triangle::Triangle(const Point& p1, const Point& p2, const Point& p3) noexcept {
+Triangle::Triangle(const Point& p1, const Point& p2, const Point& p3)  {
 
     bool is_triangle = validate(p1,p2,p3);
 
@@ -54,11 +55,11 @@ Triangle::Triangle(const Point& p1, const Point& p2, const Point& p3) noexcept {
         throw invalid_argument("Invalid points. Triangle can't be created!");
     }
 
-    points {p1,p2,p3};
+    points = {p1,p2,p3};
 
 }
 
-Point Triangle::center() const {
+Point Triangle::calculateCentre() const {
     double center_x = 0;
     double center_y = 0;
 
@@ -70,8 +71,8 @@ Point Triangle::center() const {
     return Point(center_x / 3.0, center_y / 3.0);
 }
 
- Triangle::double() const {
-    double p = 0.5 * (points[0] + points[1] + points[2]);
+ Triangle:: operator double() const {
+    
 
     double A = Point::dist(points[0], points[1]);
 
@@ -79,44 +80,46 @@ Point Triangle::center() const {
 
     double C = Point::dist(points[2], points[3]);
 
+    double p = 0.5 * (A + B + C);
+
     double area = sqrt(p * (p - A ) * (p - B) * (p - C));
 
     return area;
 }
-// Дописать
-// bool operator==(const Pentagon& lhs, const Pentagon& rhs) {
-//   bool flag = false;
 
-//   for (size_t i = 0; i < lhs.coordinates.get_size(); ++i) {
-//     flag = false;
 
-//     for (size_t j = 0; i < rhs.coordinates.get_size(); ++i) {
-//       if (lhs.coordinates[i] == rhs.coordinates[j]) {
-//         flag = true;
-//         continue;
-//       }
-//     }
+bool operator==(const Triangle& first, const Triangle& second) {
+  for (size_t i = 0; i < first.points.get_size(); ++i) {
+    bool flag = false;
 
-//     if (!flag) {
-//       return false;
-//     }
-//   }
+    for (size_t j = 0; j < second.points.get_size(); ++j) {
+      if (first.points[i] == second.points[j]) {
+        flag = true;
+        break;
+      }
+    }
 
-//   return true;
-// }
+    if (!flag) {
+      return false;
+    }
+  }
 
-// ostream& operator<<(ostream& os, const Pentagon& rhs) {
-//   for (size_t i = 0; i < rhs.coordinates.get_size(); ++i) {
-//     os << rhs.coordinates[i];
-//   }
-//   return os;
-// }
+  return true;
+}
 
-// istream& operator>>(istream& is, Pentagon& rhs) {
-//   is >> rhs.coordinates[0] >> rhs.coordinates[1] >> rhs.coordinates[2] >> 
-//         rhs.coordinates[3] >> rhs.coordinates[4];
-//   return is;
-// }
+
+ostream& operator<<(ostream& os, const Triangle& triangle) {
+  for (size_t i = 0; i < triangle.points.get_size(); ++i) {
+    os << triangle.points[i];
+  }
+  return os;
+}
+
+istream& operator>>(istream& is, Triangle& tr) {
+  is >> tr.points[0] >> tr.points[1] >> tr.points[2];
+        
+  return is;
+}
 
 
 
