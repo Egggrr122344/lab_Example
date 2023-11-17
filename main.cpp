@@ -38,6 +38,12 @@ Point p8(p7.getX() - 1, p7.getY() - (1 + std::sqrt(2)));
     cout << hex1 << endl;
     
 
+    Triangle* t100 = new Triangle(Point(0, 0), Point(5, sqrt(3) * 5), Point(10, 0));
+    Triangle* t200 = new Triangle(Point(1, 1), Point(6, 1 + sqrt(3) * 5), Point(11, 1));
+    Vector<Figure*> vec = {t100, t200};
+    cout << vec.is_empty() << endl << vec.get_size() << endl;
+
+
     // Point pr1, pr2, pr3;
     // cin >> pr1;
     // cin >> pr2;
