@@ -26,8 +26,11 @@ add_executable(${CMAKE_PROJECT_NAME}_exe main.cpp)
 
 target_link_libraries(${CMAKE_PROJECT_NAME}_exe PRIVATE ${CMAKE_PROJECT_NAME}_lib)
 
-add_executable(${CMAKE_PROJECT_NAME}_test ${TEST_SOURCES})
+add_executable(octagon_test ${TEST_DIR}/octagon_test.cpp)
+target_link_libraries(octagon_test PRIVATE ${CMAKE_PROJECT_NAME}_lib gtest gtest_main)
 
-target_include_directories(${CMAKE_PROJECT_NAME}_test PRIVATE ${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
+add_executable(triangle_test ${TEST_DIR}/triangle_test.cpp)
+target_link_libraries(triangle_test PRIVATE ${CMAKE_PROJECT_NAME}_lib gtest gtest_main)
 
-target_link_libraries(${CMAKE_PROJECT_NAME}_test PRIVATE ${CMAKE_PROJECT_NAME}_lib gtest gtest_main)
+add_executable(hexagon_test ${TEST_DIR}/hexagon_test.cpp)
+target_link_libraries(hexagon_test PRIVATE ${CMAKE_PROJECT_NAME}_lib gtest gtest_main)

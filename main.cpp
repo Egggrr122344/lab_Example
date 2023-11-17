@@ -25,6 +25,25 @@ Point p8(p7.getX() - 1, p7.getY() - (1 + std::sqrt(2)));
     Octagon* t1 = new Octagon(p1,p2,p3,p4,p5,p6,p7,p8);
     Octagon oct1 (p1,p2,p3,p4,p5,p6,p7,p8);
     cout << oct1.calculateCentre() << endl << oct1.operator double() << endl;
+    Point px1(10,10);
+    Point px2(px1.getX()-1, px1.getY());
+    Point px3(px1.getX()-1.5, px1.getY() - sqrt(3)/2);
+    Point px4(px1.getX() + 0.5, px1.getY() - sqrt(3)/2);
+    Point px5(px1.getX() - 1, px1.getY() - sqrt(3));
+    Point px6(px1.getX(), px1.getY() - sqrt(3));
+    Hexagon* hex = new Hexagon(px1, px2, px3 , px4, px5, px6);
+    Hexagon hex1 (px1, px2, px3 , px4, px5, px6);
+    cout << hex1.calculateCentre() << endl;
+    cout << hex1 << endl;
+    
+
+    Point pr1, pr2, pr3;
+    cin >> pr1;
+    cin >> pr2;
+    cin >> pr3;
+    Triangle tr1(pr1, pr2, pr3);
+    cout << tr1 << endl;
+    
 
     // Hexagon* t1 = new Hexagon(Point(0,0), Point(1,0), Point (2, 0), Point(2,1), Point(1,2), Point(0,2));
 

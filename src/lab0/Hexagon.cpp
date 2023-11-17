@@ -39,17 +39,6 @@ bool Hexagon::validate(
     double center_p5 = Point::dist(center, p5);
     double center_p6 = Point::dist(center, p6);
 
-
-    if (dist_p1p2 > exception && dist_p2p3 > exception &&
-        dist_p3p4 > exception && dist_p4p5 > exception &&
-        dist_p5p6 > exception && dist_p1p6 > exception
-    ) {
-        if (abs(dist_p1p2 - dist_p2p3) < exception &&
-            abs(dist_p2p3 - dist_p3p4) < exception &&
-            abs(dist_p3p4 - dist_p4p5) < exception &&
-            abs(dist_p4p5 - dist_p5p6) < exception &&
-            abs(dist_p4p5 - dist_p1p6) < exception
-        ) {
             if (
                 abs(center_p1 - center_p2) < exception &&
                 abs(center_p2 - center_p3) < exception &&
@@ -59,9 +48,7 @@ bool Hexagon::validate(
             ) {
                 return true;
             }
-        }
-    }
-
+    
     return false;
 }
 

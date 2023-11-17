@@ -1,4 +1,4 @@
-.PHONY: build run test
+.PHONY: build run test octagontest triangletest hexagontest
 
 build: clean-build
 	mkdir build
@@ -11,6 +11,15 @@ run:
 
 test:
 	./build/*_test
+
+octagontest:
+	./build/octagon_test
+
+triangletest:
+	./build/triangle_test
+
+hexagontest:
+	./build/hexagon_test
 
 clean-build:
 	rm -rf ./build/
