@@ -34,3 +34,6 @@ target_link_libraries(triangle_test PRIVATE ${CMAKE_PROJECT_NAME}_lib gtest gtes
 
 add_executable(hexagon_test ${TEST_DIR}/hexagon_test.cpp)
 target_link_libraries(hexagon_test PRIVATE ${CMAKE_PROJECT_NAME}_lib gtest gtest_main)
+
+add_executable(point_test ${TEST_DIR}/point_test.cpp)
+target_link_libraries(point_test PRIVATE ${CMAKE_PROJECT_NAME}_lib gtest gtest_main)

@@ -33,7 +33,8 @@ Point p8(p7.getX() - 1, p7.getY() - (1 + std::sqrt(2)));
     Point px6(px1.getX(), px1.getY() - sqrt(3));
     Hexagon* hex = new Hexagon(px1, px2, px3 , px4, px5, px6);
     Hexagon hex1 (px1, px2, px3 , px4, px5, px6);
-    cout << hex1.calculateCentre() << endl;
+    cout  << hex1.calculateCentre() << endl;
+    cout << "area: " << hex1.operator double() << endl;
     cout << hex1 << endl;
     
 
@@ -43,6 +44,7 @@ Point p8(p7.getX() - 1, p7.getY() - (1 + std::sqrt(2)));
     cin >> pr3;
     Triangle tr1(pr1, pr2, pr3);
     cout << tr1 << endl;
+    
     
 
     // Hexagon* t1 = new Hexagon(Point(0,0), Point(1,0), Point (2, 0), Point(2,1), Point(1,2), Point(0,2));

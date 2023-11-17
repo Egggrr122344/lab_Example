@@ -38,10 +38,13 @@ void Point::setY(double y) noexcept {
 }
 
 bool operator==(const Point& p1, const Point& p2) {
-    double exception = 1e-5;
+     if (p1.getX() == p2.getX() && p1.getY() == p2.getY()) {
+    return true;
+  }
 
-    return (std::abs(p1.getX() - p2.getX())) && (std::abs(p1.getY() == p2.getY()));
+  return false;
 }
+
 
 bool operator!=(const Point& p1, const Point& p2) {
     return !(p1 == p2);

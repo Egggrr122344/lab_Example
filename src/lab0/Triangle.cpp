@@ -89,13 +89,15 @@ Point Triangle::calculateCentre() const {
 
 
 bool operator==(const Triangle& first, const Triangle& second) {
-  for (size_t i = 0; i < first.points.get_size(); ++i) {
-    bool flag = false;
+  bool flag = false;
 
-    for (size_t j = 0; j < second.points.get_size(); ++j) {
+  for (size_t i = 0; i < first.points.get_size(); ++i) {
+    flag = false;
+
+    for (size_t j = 0; i < second.points.get_size(); ++i) {
       if (first.points[i] == second.points[j]) {
         flag = true;
-        break;
+        continue;
       }
     }
 
