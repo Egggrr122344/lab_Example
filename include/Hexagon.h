@@ -1,27 +1,37 @@
-#ifndef HEXAGON
-#define HEXAGON
+#ifndef HEXAGON_HPP_INCLUDED
+#define HEXAGON_HPP_INCLUDED
 
 #include "Figure.h"
-
-#include <iostream>
-
 using namespace std;
+template <typename T>
+class Hexagon : public Figure<T> {
+public:
+  Hexagon() = delete;
+  Hexagon(
+    const Point<T>& p1,
+    const Point<T>& p2,
+    const Point<T>& p3,
+    const Point<T>& p4,
+    const Point<T>& p5,
+    const Point<T>& p6
+  );
 
-class Hexagon: public Figure {
-public:    
-    Hexagon(const Point& p1, const Point& p2, const Point& p3, const Point& p4, const Point& p5, const Point& p6);
-    operator double() const override;
-    Point calculateCentre() const override;
+  virtual ~Hexagon() = default;
 
-    friend ostream& operator<<(ostream&, const Hexagon& hex);
-    friend istream& operator>>(istream&, Hexagon& hex);
-    friend bool operator==(const Hexagon& hex1, const Hexagon& hex2);
+  bool operator==(const Hexagon<T>& rhs) const;
 
+  Point<T> calculate_centre() const override;
+  operator double() const override;
 
 private:
-    bool validate(const Point& p1, const Point& p2, const Point& p3, const Point& p4, const Point& p5, const Point& p6) noexcept;
-
-
+  static bool validate(    
+    const Point<T>& p1,
+    const Point<T>& p2,
+    const Point<T>& p3,
+    const Point<T>& p4,
+    const Point<T>& p5,
+    const Point<T>& p6
+    ) noexcept;
 };
 
-#endif
+#endif // HEXAGON_HPP_INCLUDED

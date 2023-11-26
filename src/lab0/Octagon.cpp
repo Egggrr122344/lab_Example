@@ -86,22 +86,20 @@ Octagon<T>::operator double() const {
 
 template <typename T>
 bool Octagon<T>::operator==(const Octagon<T>& rhs) const {
-  bool flag = false;
 
-  for (size_t i = 0; i < this->coordinates.get_size(); ++i) {
-    flag = false;
+for (size_t i = 0; i < this->coordinates.get_size(); ++i) {
 
-    for (size_t j = 0; i < rhs.coordinates.get_size(); ++i) {
-      if (this->coordinates[i] == rhs.coordinates[j]) {
-        flag = true;
-        continue;
-      }
-    }
-
-    if (!flag) {
-      return false;
-    }
+  for (size_t j = 0; j < rhs.coordinates.get_size(); ++j) {
+    if (this->coordinates[i] == rhs.coordinates[j]) {
+        goto found; 
   }
+}
 
-  return true;
+return false;
+
+found:
+continue;
+}
+
+return true;
 }

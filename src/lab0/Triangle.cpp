@@ -59,25 +59,21 @@ Point<T> Triangle<T>::calculate_centre() const {
 
 template <typename T>
 bool Triangle<T>::operator==(const Triangle<T>& rhs) const {
-  bool flag = false;
-
   for (size_t i = 0; i < this->coordinates.get_size(); ++i) {
-    flag = false;
-
     for (size_t j = 0; i < rhs.coordinates.get_size(); ++i) {
       if (this->coordinates[i] == rhs.coordinates[j]) {
-        flag = true;
-        continue;
+        goto found;
       }
     }
+    return false;
 
-    if (!flag) {
-      return false;
-    }
+  found:
+    continue;
   }
 
   return true;
 }
+
 
 template <typename T>
 Triangle<T>::operator double() const {
