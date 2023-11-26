@@ -1,124 +1,96 @@
 #include "Hexagon.h"
 
-#include <cmath>
-
-using namespace std;
-
-bool Hexagon::validate(    
-    const Point& p1,
-    const Point& p2,
-    const Point& p3,
-    const Point& p4,
-    const Point& p5,
-    const Point& p6
-    ) noexcept {
-
-    double sumX = p1.getX() + p2.getX() + p3.getX() + p4.getX() + p5.getX() + p6.getX();
-
-    double sumY = p1.getY() + p2.getY() + p3.getY() + p4.getY() + p5.getY() + p6.getY();
-
-    Point center = Point::createPoint(sumX / 6.0, sumY / 6.0);
-
-    double exception = 1e-5;
-
-    // Длина сторон
-
-    double dist_p1p2 = Point::dist(p1, p2);
-    double dist_p2p3 = Point::dist(p2, p3);
-    double dist_p3p4 = Point::dist(p3, p4);
-    double dist_p4p5 = Point::dist(p4, p5);
-    double dist_p5p6 = Point::dist(p5, p6);
-    double dist_p1p6 = Point::dist(p1, p6);
-
-    // Расстояние от точек до центра 
-
-    double center_p1 = Point::dist(center, p1);
-    double center_p2 = Point::dist(center, p2);
-    double center_p3 = Point::dist(center, p3);
-    double center_p4 = Point::dist(center, p4);
-    double center_p5 = Point::dist(center, p5);
-    double center_p6 = Point::dist(center, p6);
-
-            if (
-                abs(center_p1 - center_p2) < exception &&
-                abs(center_p2 - center_p3) < exception &&
-                abs(center_p3 - center_p4) < exception &&
-                abs(center_p4 - center_p5) < exception && 
-                abs(center_p5 - center_p6) < exception
-            ) {
-                return true;
-            }
+template <typename T>
+bool Hexagon<T>::validate(    
+    const Point<T>& p1,
+    const Point<T>& p2,
+    const Point<T>& p3,
+    const Point<T>& p4,
+    const Point<T>& p5,
+    const Point<T>& p6,
+  ) noexcept {
     
-    return false;
-}
+  double sum_x = p1.get_x() + p2.get_x() + p3.get_x() + p4.get_x() + p5.get_x() + p6.get_x() + p7.get_x() + p8.get_x();
+  double sum_y = p1.get_y() + p2.get_y() + p3.get_y() + p4.get_y() + p5.get_y() + p6.get_y() + p7.get_y() + p8.get_y();
+  Point<T> centre(sum_x / 6.0, sum_y / 6.0);
 
-Hexagon::Hexagon(
-    const Point& p1,
-    const Point& p2,
-    const Point& p3,
-    const Point& p4,
-    const Point& p5,
-    const Point& p6
-    ) {
+  double inaccuracy = 1e-10;
 
-    bool is_hexagon = validate(p1, p2, p3, p4, p5, p6);
-
-    if (!is_hexagon) {
-        throw invalid_argument("Invalid points. Hexagon can't be created!");
-    }
-
-    points = {p1, p2, p3, p4, p5, p6};
-}
-
-Point Hexagon::calculateCentre() const {
-  double center_x = 0;
-  double center_y = 0;
-
-  for (size_t i = 0; i < points.get_size(); ++i) {
-    center_x += points[i].getX();
-    center_y += points[i].getY();
+  // straight lines from center to corner
+  double len_to_p1 = Point<T>::line_len(centre, p1);
+  double len_to_p2 = Point<T>::line_len(centre, p2);
+  double len_to_p3 = Point<T>::line_len(centre, p3);
+  double len_to_p4 = Point<T>::line_len(centre, p4);
+  double len_to_p5 = Point<T>::line_len(centre, p5);
+  double len_to_p6 = Point<T>::line_len(centre, p6);
+  if (
+    abs(len_to_p1 - len_to_p2) < inaccuracy &&
+    abs(len_to_p2 - len_to_p3) < inaccuracy &&
+    abs(len_to_p3 - len_to_p4) < inaccuracy &&
+    abs(len_to_p4 - len_to_p5) < inaccuracy && 
+    abs(len_to_p5 - len_to_p6) < inaccuracy &&
+  ) {
+    return true;
   }
 
-  return Point(center_x / 6.0, center_y / 6.0);
+  return false;
 }
 
-Hexagon::operator double() const {
-  double len = Point::dist(points[0], points[1]);
+template <typename T>
+Hexagon<T>::Hexagon(
+  const Point<T>& p1,
+  const Point<T>& p2,
+  const Point<T>& p3,
+  const Point<T>& p4,
+  const Point<T>& p5,
+  const Point<T>& p6
+  ) {
+  
+  bool is_hexagon = validate(p1, p2, p3, p4, p5, p6);
 
-  return 3.0 * sqrt(3) * pow(len, 2) / 2.0;
-}
-
-bool operator==(const Hexagon& first, const Hexagon& second) {
-  bool flag = false;
-
-  for (size_t i = 0; i < first.points.get_size(); ++i) {
-    flag = false;
-
-    for (size_t j = 0; i < second.points.get_size(); ++i) {
-      if (first.points[i] == second.points[j]) {
-        flag = true;
-        continue;
-      }
-    }
-
-    if (!flag) {
-      return false;
-    }
+  if (!is_hexagon) {
+    throw invalid_argument("Invalid Points. Hexagon can not created!");
   }
 
-  return true;
+  this->coordinates = {p1, p2, p3, p4, p5, p6};
 }
 
+template <typename T>
+Point<T> Hexagon<T>::calculate_centre() const {
+  double centre_x = 0;
+  double centre_y = 0;
 
-ostream& operator<<(ostream& os, const Hexagon& hex) {
-  for (size_t i = 0; i < hex.points.get_size(); ++i) {
-    os << hex.points[i];
+  for (size_t i = 0; i < this->coordinates.get_size(); ++i) {
+    centre_x += this->coordinates[i].get_x();
+    centre_y += this->coordinates[i].get_y();
   }
-  return os;
+
+  return Point<T>(centre_x / 6.0, centre_y / 6.0);
 }
 
-istream& operator>>(istream& is, Hexagon& hex) {
-  is >> hex.points[0] >> hex.points[1] >> hex.points[2] >> 
-        hex.points[3] >> hex.points[4] >> hex.points[5];
-  return is;
+template <typename T>
+Hexagon<T>::operator double() const {
+  double side_len = Point<T>::line_len(this->coordinates[0], this->coordinates[1]);
+
+  return 2 * pow(side_len, 2) * (1 + sqrt(2));
+}
+
+template <typename T>
+bool Hexagon<T>::operator==(const Hexagon<T>& rhs) const {
+
+for (size_t i = 0; i < this->coordinates.get_size(); ++i) {
+
+  for (size_t j = 0; j < rhs.coordinates.get_size(); ++j) {
+    if (this->coordinates[i] == rhs.coordinates[j]) {
+        goto found; 
+  }
+}
+
+return false;
+
+found:
+continue;
+}
+
+return true;
 }
