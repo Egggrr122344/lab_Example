@@ -1,34 +1,37 @@
-#ifndef POINT
-#define POINT
+#ifndef POINT_HPP_INCLUDED
+#define POINT_HPP_INCLUDED 
 
-#include <iostream>
-
+#include <cmath>
+#include <istream>
+#include <ostream>
 using namespace std;
-
-struct Point {
+template <typename T>
+class Point {
 private:
-    double x;
-    double y;
+  T x;
+  T y;
 
 public:
-    Point();
-    Point(double x, double y);
+  Point(const T& x, const T& y);
+  Point(T& x, T& y);
+  virtual ~Point() = default;
 
-    static Point createPoint(double x, double y);
-    static double dist(const Point& p1, const Point& p2); 
+  void set_x(const T& x) noexcept;
+  void set_y(const T& x) noexcept;
+  T& get_x() noexcept;
+  T& get_y() noexcept;
+  const T& get_x() const noexcept;
+  const T& get_y() const noexcept;
+  
+  bool operator==(const Point<T>& rhs) const;
 
-    double getX () const noexcept;
-    double getY () const noexcept;
+  static double line_len(const Point<T>& x, const Point<T>& y);
 
-    void setX ( double x ) noexcept;
-    void setY ( double y ) noexcept;
+  template <typename U>
+  friend ostream& operator<<(ostream& os, const Point<U>& rhs);
 
-    friend bool operator==( const Point& p1, const Point& p2);
-    friend bool operator!=( const Point& p1, const Point& p2);
-
-    friend istream& operator>>( istream&, Point& p);
-    friend ostream& operator<<( ostream&, const Point& p);
-
+  template <typename U>
+  friend istream& operator>>(istream& is, Point<U>& rhs);
 };
 
-#endif
+#endif // POINT_HPP_INCLUDED

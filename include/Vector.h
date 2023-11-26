@@ -1,43 +1,46 @@
-#ifndef VECTOR
-#define VECTOR
+#ifndef VECTOR_HPP_INCLUDED
+#define VECTOR_HPP_INCLUDED
 
 #include <iostream>
-#include <memory>
 #include <cstring>
+#include <memory>
 
-template <typename T>
+template <typename T, typename Allocator = std::allocator<T>>
 class Vector {
+  using AllocTraits = std::allocator_traits<Allocator>;
 
 private:
   size_t capacity = 0;
   size_t size = 0;
-  T* array = nullptr;
+  T* array;
+  Allocator alloc;
 
 public:
-  Vector ();   
-  Vector ( size_t );
-  Vector ( const std::initializer_list<T>& );
-  Vector ( const Vector& );
-  Vector ( Vector&& ) noexcept;
+  class iterator;
 
-  Vector& operator=( const Vector<T>& );
-  Vector& operator=( Vector&& ) noexcept;
-  
-  virtual ~Vector();
+  Vector();   
+  Vector(size_t);
+  Vector(Allocator& alloc);
+  Vector(const std::initializer_list<T>&);
+  Vector(const Vector<T, Allocator>&);
+  Vector(Vector<T, Allocator>&&) noexcept;
+  Vector<T, Allocator>& operator=(const Vector<T, Allocator>&);
+  Vector<T, Allocator>& operator=(Vector<T, Allocator>&&) noexcept;
+  ~Vector();
 
   size_t get_size() const;
   size_t get_capacity() const;
 
-  bool is_empty () const;
-  bool operator== (const Vector<T>&) const;
-  bool operator!= (const Vector<T>&) const;
+  bool empty() const;
+  bool operator==(const Vector<T, Allocator>&) const;
+  bool operator!=(const Vector<T, Allocator>&) const;
 
-  void resize (size_t, const T& = T());
-  void push_back (const T&);
-  void reserve (size_t n);
-  void pop_back ();
-  void clear ();
-  void shrink_to_fit ();
+  void resize(size_t, const T& = T());
+  void push_back(const T&);
+  void reserve(size_t n);
+  void pop_back();
+  void clear();
+  void shrink_to_fit();
 
   template <typename... Args>
   void emplace_back(const Args& ...args);
@@ -50,6 +53,38 @@ public:
   const T& at(size_t) const;
   const T& back() const;
   const T& front() const;
+  iterator begin();
+  iterator end();
+  const iterator cbegin() const;
+  const iterator cend() const;
+
+  class iterator {
+  private:
+    T* obj_ptr;
+  
+  public:
+    iterator() = delete;
+    iterator(T* obj);
+    iterator(const iterator& rhs);
+    
+    const T& operator*() const noexcept;
+    T& operator*() noexcept;
+    iterator& operator++();
+    iterator operator++(int);
+    iterator operator--(int);
+    iterator& operator--();
+    const iterator& operator++() const;
+    const iterator operator++(int) const;
+    const iterator operator--(int) const;
+    const iterator& operator--() const;
+    iterator& operator+=(uint32_t steps_count);
+    iterator& operator-=(uint32_t steps_count);
+    iterator operator+(uint32_t steps_count) const;
+    iterator operator-(uint32_t steps_count) const;
+
+    bool operator==(const Vector<T, Allocator>::iterator& rhs) const;
+    bool operator!=(const Vector<T, Allocator>::iterator& rhs) const;
+  };
 };
 
-#endif 
+#endif // VECTOR_HPP_INCLUDED

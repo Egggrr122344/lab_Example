@@ -1,101 +1,71 @@
 #include "Triangle.h"
 
-#include <cmath>
+template <typename T>
+bool Triangle<T>::validate(const Point<T>& p1, const Point<T>& p2, const Point<T>& p3) noexcept {
+  double sum_x = p1.get_x() + p2.get_x() + p3.get_x();
+  double sum_y = p1.get_y() + p2.get_y() + p3.get_y();
+  Point<T> centre(sum_x / 3.0, sum_y / 3.0);
 
-using namespace std;
+  double inaccuracy = 1e-10;
 
+  double len1 = Point<T>::line_len(centre, p1);
+  double len2 = Point<T>::line_len(centre, p2);
+  double len3 = Point<T>::line_len(centre, p3);
 
-bool Triangle:: validate(const Point& p1, const Point& p2, const Point& p3) noexcept {
-   
-    double sumX = p1.getX() + p2.getX() + p3.getX();
-    double sumY = p1.getY() + p2.getY() + p3.getY();
+  if (std::abs(len1 - len2) <= inaccuracy && std::abs(len2 - len3) <= inaccuracy) {
+    return true;
+  }
 
-    double centerX = sumX / 3.0;
-    double centerY = sumY / 3.0;
-
-    Point center = Point::createPoint(centerX, centerY);
-     // distance from points
-
-    double p1_p2 = Point::dist(p1,p2);
-    double p2_p3 = Point::dist(p2,p3);
-    double p1_p3 = Point::dist(p1,p3);
-
-    // distance from center
-
-    double center_p1 = Point::dist(center,p1);
-    double center_p2 = Point::dist(center,p2);
-    double center_p3 = Point::dist(center,p3);
-
-    // минимальная штука
-
-    double exception = 1e-5;
-
-    // Сумму каждых двух сторон
-
-    double sum1 = p1_p2 + p2_p3;
-    double sum2 = p2_p3 + p1_p3;
-    double sum3 = p1_p2 + p1_p3;
-
-    if ( (p1_p2 > exception) && (p2_p3 > exception) && (p1_p3 > exception)) {
-        if ( ( sum1 > p1_p3) && (sum2 > p1_p2) && (sum3 > p2_p3) ) {
-
-                return true;
-            }
-        return false;
-        }
-    return false;
-// Валидация на соответствие свойства треугольника
+  return false;
 }
 
-Triangle::Triangle(const Point& p1, const Point& p2, const Point& p3)  {
+template <typename T>
+Triangle<T>::Triangle(const Point<T>& p1, const Point<T>& p2, const Point<T>& p3) {
+  bool is_triangle = validate(p1, p2, p3);
 
-    bool is_triangle = validate(p1,p2,p3);
+  if (!is_triangle) {
+    throw invalid_argument("Invalid Point<T>s. Can not create triangle!");
+  }
 
-    if (!is_triangle) {
-        throw invalid_argument("Invalid points. Triangle can't be created!");
-    }
-
-    points = {p1,p2,p3};
-
+  this->coordinates = {p1, p2, p3};
 }
 
-Point Triangle::calculateCentre() const {
-    double center_x = 0;
-    double center_y = 0;
-
-    for (size_t i {0}; i < points.get_size(); i++) {
-        center_x += points[i].getX();
-        center_y += points[i].getY();
-    }
-
-    return Point(center_x / 3.0, center_y / 3.0);
+template <typename U>
+ostream& operator<<(ostream& os, Triangle<U>& rhs) {
+  for (size_t i = 0; i < rhs.coordinates.get_size(); ++i) {
+    os << rhs.coordinates[i];
+  }
+  return os;
 }
 
- Triangle:: operator double() const {
-    
-
-    double A = Point::dist(points[0], points[1]);
-
-    double B = Point::dist(points[1], points[2]);
-
-    double C = Point::dist(points[2], points[3]);
-
-    double p = 0.5 * (A + B + C);
-
-    double area = sqrt(p * (p - A ) * (p - B) * (p - C));
-
-    return area;
+template <typename U>
+istream& operator>>(istream& is, Triangle<U>& rhs) {
+  is >> rhs.coordinates[0] >> rhs.coordinates[1] >> rhs.coordinates[2];
+  return is;
 }
 
+template <typename T>
+Point<T> Triangle<T>::calculate_centre() const {
+  double centre_x = 0;
+  double centre_y = 0;
 
-bool operator==(const Triangle& first, const Triangle& second) {
+  for (size_t i = 0; i < this->coordinates.get_size(); ++i) {
+    centre_x += this->coordinates[i].get_x();
+    centre_y += this->coordinates[i].get_y();
+  }
+
+  return Point<T>(centre_x / 3.0, centre_y / 3.0);
+}
+
+template <typename T>
+bool Triangle<T>::operator==(const Triangle<T>& rhs) const {
   bool flag = false;
 
-  for (size_t i = 0; i < first.points.get_size(); ++i) {
+  for (size_t i = 0; i < this->coordinates.get_size(); ++i) {
     flag = false;
 
-    for (size_t j = 0; i < second.points.get_size(); ++i) {
-      if (first.points[i] == second.points[j]) {
+    for (size_t j = 0; i < rhs.coordinates.get_size(); ++i) {
+      if (this->coordinates[i] == rhs.coordinates[j]) {
         flag = true;
         continue;
       }
@@ -109,21 +79,14 @@ bool operator==(const Triangle& first, const Triangle& second) {
   return true;
 }
 
+template <typename T>
+Triangle<T>::operator double() const {
+  double x2x1 = this->coordinates[1].get_x() - this->coordinates[0].get_x();
+  double y3y1 = this->coordinates[2].get_y() - this->coordinates[0].get_y();
+  double x3x1 = this->coordinates[2].get_x() - this->coordinates[0].get_x();
+  double y2y1 = this->coordinates[1].get_y() - this->coordinates[0].get_y();
 
-ostream& operator<<(ostream& os, const Triangle& triangle) {
-  for (size_t i = 0; i < triangle.points.get_size(); ++i) {
-    os << triangle.points[i];
-  }
-  return os;
+  double square = std::abs(x2x1 * y3y1 - x3x1 * y2y1) * 0.5;
+
+  return square;
 }
-
-istream& operator>>(istream& is, Triangle& tr) {
-  is >> tr.points[0] >> tr.points[1] >> tr.points[2];
-        
-  return is;
-}
-
-
-
-
-
