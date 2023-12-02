@@ -87,4 +87,4 @@ public:
   };
 };
 
-#endif // VECTOR_HPP_INCLUDED
+#endif 

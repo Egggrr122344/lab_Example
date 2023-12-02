@@ -34,4 +34,4 @@ private:
     ) noexcept;
 };
 
-#endif // HEXAGON_HPP_INCLUDED
+#endif 

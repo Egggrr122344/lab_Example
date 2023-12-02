@@ -34,4 +34,4 @@ public:
   friend istream& operator>>(istream& is, Point<U>& rhs);
 };
 
-#endif // POINT_HPP_INCLUDED
+#endif 

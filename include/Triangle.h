@@ -25,4 +25,4 @@ private:
   static bool validate(const Point<T>& p1, const Point<T>& p2, const Point<T>& p3) noexcept;
 };
 
-#endif // TRIANGLE_HPP_INCLUDED
+#endif 

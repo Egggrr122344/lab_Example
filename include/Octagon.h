@@ -38,4 +38,4 @@ private:
     ) noexcept;
 };
 
-#endif // OCTAGON_HPP_INCLUDED
+#endif 
