@@ -6,13 +6,17 @@ bool Triangle<T>::validate(const Point<T>& p1, const Point<T>& p2, const Point<T
   double sum_y = p1.get_y() + p2.get_y() + p3.get_y();
   Point<T> centre(sum_x / 3.0, sum_y / 3.0);
 
-  double inaccuracy = 1e-10;
+  // double inaccuracy = 1e-10;
 
-  double len1 = Point<T>::line_len(centre, p1);
-  double len2 = Point<T>::line_len(centre, p2);
-  double len3 = Point<T>::line_len(centre, p3);
+  // double len1 = Point<T>::line_len(centre, p1);
+  // double len2 = Point<T>::line_len(centre, p2);
+  // double len3 = Point<T>::line_len(centre, p3);
 
-  if (std::abs(len1 - len2) <= inaccuracy && std::abs(len2 - len3) <= inaccuracy) {
+  double AB = Point<T>::line_len(p1,p2);
+  double BC = Point<T>::line_len(p2,p3);
+  double AC = Point<T>::line_len(p1,p3);
+
+  if ( (AB + BC > AC) && (BC + AC > AB) && (AB + AC > BC) ) {
     return true;
   }
 
@@ -24,7 +28,7 @@ Triangle<T>::Triangle(const Point<T>& p1, const Point<T>& p2, const Point<T>& p3
   bool is_triangle = validate(p1, p2, p3);
 
   if (!is_triangle) {
-    throw invalid_argument("Invalid Point<T>s. Can not create triangle!");
+    throw invalid_argument("Invalid Point<T>. Can not create triangle!");
   }
 
   this->coordinates = {p1, p2, p3};
@@ -59,30 +63,38 @@ Point<T> Triangle<T>::calculate_centre() const {
 
 template <typename T>
 bool Triangle<T>::operator==(const Triangle<T>& rhs) const {
-  for (size_t i = 0; i < this->coordinates.get_size(); ++i) {
-    for (size_t j = 0; i < rhs.coordinates.get_size(); ++i) {
-      if (this->coordinates[i] == rhs.coordinates[j]) {
-        goto found;
-      }
+    if (this->coordinates.get_size() != rhs.coordinates.get_size()) {
+        return false;
     }
-    return false;
 
-  found:
-    continue;
-  }
+    for (size_t i = 0; i < this->coordinates.get_size(); ++i) {
+        if (this->coordinates[i] != rhs.coordinates[i]) {
+            return false;
+        }
+    }
 
-  return true;
+    return true;
 }
+
 
 
 template <typename T>
 Triangle<T>::operator double() const {
-  double x2x1 = this->coordinates[1].get_x() - this->coordinates[0].get_x();
-  double y3y1 = this->coordinates[2].get_y() - this->coordinates[0].get_y();
-  double x3x1 = this->coordinates[2].get_x() - this->coordinates[0].get_x();
-  double y2y1 = this->coordinates[1].get_y() - this->coordinates[0].get_y();
+  double p1x = this -> coordinates[0].get_x();
+  double p2x = this -> coordinates[1].get_x();
+  double p3x = this -> coordinates[2].get_x();
+  
+  double p1y = this -> coordinates[0].get_y();
+  double p2y = this -> coordinates[1].get_y();
+  double p3y = this -> coordinates[2].get_y();
 
-  double square = std::abs(x2x1 * y3y1 - x3x1 * y2y1) * 0.5;
+  double p1p2 = std::sqrt(std::pow(p1x - p2x, 2) + std::pow(p1y - p2y, 2) );
+  double p2p3 = std::sqrt(std::pow(p2x - p3x, 2) + std::pow(p2y - p3y, 2) );
+  double p1p3 = std::sqrt(std::pow(p1x - p3x, 2) + std::pow(p1y - p3y, 2) );
 
-  return square;
+  double p = (p1p2 + p2p3 + p1p3) / 2;
+
+  double area = std::sqrt(p * (p - p1p2) * (p - p2p3) * (p - p1p3));
+
+  return area;
 }

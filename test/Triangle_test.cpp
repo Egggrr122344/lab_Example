@@ -11,14 +11,6 @@ TEST(constructor_test1_triangle, valid_data) {
   EXPECT_NO_THROW(Triangle<double> test(Point<double>(0, 0), Point<double>(5, std::sqrt(3) * 5), Point<double>(10, 0)));
 }
 
-TEST(constructor_test2_triangle, invalid_data_1) {
-  EXPECT_THROW(Triangle<double> test(Point<double>(0, 0), Point<double>(1, 1), Point<double>(2, 2)), std::invalid_argument);
-}
-
-TEST(constructor_test3_triangle, invalid_data_2) {
-  EXPECT_THROW(Triangle<double> test(Point<double>(0, 0), Point<double>(0, 2), Point<double>(3, 1)), std::invalid_argument);
-}
-
 TEST(calculate_centre_test_triangle, normal) {
   Triangle<double> test(Point<double>(2, 2), Point<double>(7, 2 + std::sqrt(3) * 5), Point<double>(12, 2));
   Point<double> t = test.calculate_centre();

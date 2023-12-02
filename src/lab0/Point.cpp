@@ -1,25 +1,19 @@
 #include "Point.h"
 
 template <typename T>
-Point<T>::Point(const T& x, const T& y):  {
-    this -> x = x;
-    this -> y = y;
-}
+Point<T>::Point(const T& x, const T& y): x(x), y(y) {}
 
 template <typename T>
-Point<T>::Point(T& x, T& y):  {
-    this -> x = x;
-    this -> y = y;
-}
+Point<T>::Point(T& x, T& y): x(x), y(y) {}
 
 template <typename T>
 void Point<T>::set_x(const T& x) noexcept {
-  this -> x = x;
+  this->x = x;
 }
 
 template <typename T>
 void Point<T>::set_y(const T& y) noexcept {
-  this -> y = y;
+  this->y = y;
 }
 
 template <typename T>

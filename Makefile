@@ -1,4 +1,4 @@
-.PHONY: build run test octagontest triangletest hexagontest pointtest
+.PHONY: build run test Octagon_test Point_test Square_test Triangle_test
 
 build: clean-build
 	mkdir build
@@ -12,17 +12,17 @@ run:
 test:
 	./build/*_test
 
-octagontest:
-	./build/octagon_test
+Octagon_test:
+	./build/Octagon_test
 
-triangletest:
-	./build/triangle_test
+Triangle_test:
+	./build/Triangle_test
 
-hexagontest:
-	./build/hexagon_test
+Hexagon_test:
+	./build/Hexagon_test
 
-pointtest:
-	./build/point_test
+Point_test:
+	./build/Point_test
 
 clean-build:
 	rm -rf ./build/

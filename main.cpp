@@ -1,57 +1,30 @@
+#include <iostream>
+#include <memory>
+#include "Vector.h"
 #include "Octagon.h"
 #include "Hexagon.h"
-#include "Triangle.h"
-#include "Vector.h"
+#include <Triangle.h>
+#include "functions.h"
 #include "Point.h"
-#include <cmath>
-
+#include "/com.docker.devenvironments.code/src/lab0/functions.cpp"
+#include "/com.docker.devenvironments.code/src/lab0/Point.cpp"
+#include "/com.docker.devenvironments.code/src/lab0/Vector.cpp"
+#include "/com.docker.devenvironments.code/src/lab0/Triangle.cpp"
+#include "/com.docker.devenvironments.code/src/lab0/Hexagon.cpp"
 using namespace std;
+using triangle = Triangle<double>;
+using hexagon = Hexagon<double>;
+
+using point = Point<double>;
 
 int main() {
-    Point p10(0,0),p20(100,0),p30(23,150);
-    Triangle* t0 = new Triangle(p10,p20,p30);
-    
-    Triangle tr (p10,p20,p30);
-    cout << tr.calculateCentre() <<endl << tr.operator double() << endl;
-Point p1(10, 10);
-Point p2(p1.getX() - (1 + std::sqrt(2)), p1.getY() + 1);
-Point p3(p2.getX() - 1, p2.getY() + 1 + std::sqrt(2));
-Point p4(p3.getX() + 1, p3.getY() + (1 + std::sqrt(2)));
-Point p5(p4.getX() + 1 + std::sqrt(2), p4.getY() + 1);
-Point p6(p5.getX() + 1 + std::sqrt(2), p5.getY() - 1);
-Point p7(p6.getX() + 1, p6.getY() - (1 + std::sqrt(2)));
-Point p8(p7.getX() - 1, p7.getY() - (1 + std::sqrt(2)));
-
-    Octagon* t1 = new Octagon(p1,p2,p3,p4,p5,p6,p7,p8);
-    Octagon oct1 (p1,p2,p3,p4,p5,p6,p7,p8);
-    cout << oct1.calculateCentre() << endl << oct1.operator double() << endl;
-    Point px1(10,10);
-    Point px2(px1.getX()-1, px1.getY());
-    Point px3(px1.getX()-1.5, px1.getY() - sqrt(3)/2);
-    Point px4(px1.getX() + 0.5, px1.getY() - sqrt(3)/2);
-    Point px5(px1.getX() - 1, px1.getY() - sqrt(3));
-    Point px6(px1.getX(), px1.getY() - sqrt(3));
-    Hexagon* hex = new Hexagon(px1, px2, px3 , px4, px5, px6);
-    Hexagon hex1 (px1, px2, px3 , px4, px5, px6);
-    cout  << hex1.calculateCentre() << endl;
-    cout << "area: " << hex1.operator double() << endl;
-    cout << hex1 << endl;
-    
-
-    Triangle* t100 = new Triangle(Point(0, 0), Point(5, sqrt(3) * 5), Point(10, 0));
-    Triangle* t200 = new Triangle(Point(1, 1), Point(6, 1 + sqrt(3) * 5), Point(11, 1));
-    Vector<Figure*> vec = {t100, t200};
-    cout << vec.is_empty() << endl << vec.get_size() << endl;
-
-
-    // Point pr1, pr2, pr3;
-    // cin >> pr1;
-    // cin >> pr2;
-    // cin >> pr3;
-    // Triangle tr1(pr1, pr2, pr3);
-    // cout << tr1 << endl;
-    
-    
-
-    
- }
+  shared_ptr<triangle> t1 = make_shared<triangle>(point(1, 1), point(6, 1 + sqrt(3) * 5), point(11, 1));
+  shared_ptr<triangle> t0 = make_shared<triangle>(point(0, 0), point(5, sqrt(3) * 5), point(10, 0));
+  shared_ptr<hexagon> s0 = make_shared<hexagon>(point(10,10), point(9,10), point(8.5, 10 - std::sqrt(3)/2), point(10.5, 10 - std::sqrt(3)/2), point(9, 10 - std::sqrt(3)), point(10, 10 - std::sqrt(3)));
+  
+  Vector<shared_ptr<Figure<double>>> v = {t1, t0, s0};
+  print_all_areas(v);
+  print_all_centres(v);
+  double all_area = calculate_all_area(v);
+  cout << "Sum of areas: " << all_area << endl;
+}

@@ -1,5 +1,7 @@
 #include "Hexagon.h"
 
+#include "Hexagon.h"
+
 template <typename T>
 bool Hexagon<T>::validate(    
     const Point<T>& p1,
@@ -7,11 +9,11 @@ bool Hexagon<T>::validate(
     const Point<T>& p3,
     const Point<T>& p4,
     const Point<T>& p5,
-    const Point<T>& p6,
+    const Point<T>& p6
   ) noexcept {
     
-  double sum_x = p1.get_x() + p2.get_x() + p3.get_x() + p4.get_x() + p5.get_x() + p6.get_x() + p7.get_x() + p8.get_x();
-  double sum_y = p1.get_y() + p2.get_y() + p3.get_y() + p4.get_y() + p5.get_y() + p6.get_y() + p7.get_y() + p8.get_y();
+  double sum_x = p1.get_x() + p2.get_x() + p3.get_x() + p4.get_x() + p5.get_x() + p6.get_x();
+  double sum_y = p1.get_y() + p2.get_y() + p3.get_y() + p4.get_y() + p5.get_y() + p6.get_y();
   Point<T> centre(sum_x / 6.0, sum_y / 6.0);
 
   double inaccuracy = 1e-10;
@@ -28,7 +30,7 @@ bool Hexagon<T>::validate(
     abs(len_to_p2 - len_to_p3) < inaccuracy &&
     abs(len_to_p3 - len_to_p4) < inaccuracy &&
     abs(len_to_p4 - len_to_p5) < inaccuracy && 
-    abs(len_to_p5 - len_to_p6) < inaccuracy &&
+    abs(len_to_p5 - len_to_p6) < inaccuracy
   ) {
     return true;
   }
@@ -77,20 +79,15 @@ Hexagon<T>::operator double() const {
 
 template <typename T>
 bool Hexagon<T>::operator==(const Hexagon<T>& rhs) const {
+    if (this->coordinates.get_size() != rhs.coordinates.get_size()) {
+        return false;
+    }
 
-for (size_t i = 0; i < this->coordinates.get_size(); ++i) {
+    for (size_t i = 0; i < this->coordinates.get_size(); ++i) {
+        if (this->coordinates[i] != rhs.coordinates[i]) {
+            return false;
+        }
+    }
 
-  for (size_t j = 0; j < rhs.coordinates.get_size(); ++j) {
-    if (this->coordinates[i] == rhs.coordinates[j]) {
-        goto found; 
-  }
-}
-
-return false;
-
-found:
-continue;
-}
-
-return true;
+    return true;
 }
