@@ -1,23 +1,23 @@
-.PHONY: build run test test_allocator test_list
+.PHONY: build run test_factory test_knight test_squirrel test_merchant clean-build
 
 build: clean-build
 	mkdir build
-	git submodule init
-	git submodule update
-	cd ./build; cmake ..; make all
+	cd build && cmake .. && make
 
 run:
-	./build/*_exe
+	./build/${PROJECT_NAME}
 
-test:
-	./build/*_test
+test_factory:
+	./build/test_factory
 
-test_allocator:
-	./build/test_allocator
-	
-test_list:
-	./build/test_list
+test_knight:
+	./build/test_knight
 
+test_squirrel:
+	./build/test_squirrel
+
+test_merchant:
+	./build/test_merchant
 
 clean-build:
 	rm -rf ./build/

@@ -1,32 +1,76 @@
-#include <iostream>
-#include <map>
-#include <allocator.h>
-#include "/com.docker.devenvironments.code/src/lab0/allocator.cpp"
-#include <list.h>
-#include "/com.docker.devenvironments.code/src/lab0/list.cpp"
+#include "bits/stdc++.h"
+#include "include/factory.hpp"
+#include "include/knight.hpp"
+#include "include/merchant.hpp"
+#include "include/observer.hpp"
+#include "include/squirrel.hpp"
+#include "include/npc.hpp"
+
+std::ostream &operator<<(std::ostream &out, const set_t &s) {
+    for (auto npc : s) {
+        out << *npc.get() << std::endl;
+    }
+    return out;
+}
 
 int main() {
-  std::map<int, int, std::less<int>, mystd::allocator<int, 1000>> m;
+    set_t npc_set;
+    NPCFactory factory;
+    std::shared_ptr<Observer> console_observer, file_observer;
+    console_observer = std::make_shared<ConsoleObserver>();
+    file_observer = std::make_shared<FileObserver>();
 
-  for (size_t i = 0; i < 10; ++i) {
-    m.insert({i + 10, i});
-  }
+    std::cout << "Generating ..." << std::endl
+              << std::endl;
+    for (size_t i = 0; i < 100; ++i) {
+        std::shared_ptr<NPC> cur_npc = factory.createNPC(NPC_type(std::rand() % 3 + 1),
+                                                         std::rand() % 500 + 1,
+                                                         std::rand() % 500 + 1);
 
-  for (auto& e : m) {
-    std::cout << '{' << e.first << ", " << e.second << "}, ";
-  }
+        cur_npc->attach(console_observer);
+        cur_npc->attach(file_observer);
+        npc_set.insert(cur_npc);
+    }
 
-  std::cout << std::endl;
-  mystd::list<int, mystd::allocator<int, 1000>> lst;
-  mystd::list<int, mystd::allocator<int, 1000>> a;
-  a = lst;
+    std::cout << "Saving ..." << std::endl
+              << std::endl;
+    factory.save(npc_set, "npc.txt");
 
-  lst.push_front(123);
-  a.push_front(228);
+    std::cout << "Loading ..." << std::endl
+              << std::endl;
+    npc_set = factory.load("npc.txt");
 
-  std::cout << a.max_size() << std::endl;
-  std::cout << a.front() << std::endl;
-  std::cout << lst.max_size() << std::endl;
-  std::cout << lst.front() << std::endl;
-  return 0;
+    std::cout << "Warriors list:\n"
+              << npc_set << std::endl;
+
+    std::cout << "Fighting ..." << std::endl
+              << std::endl;
+    std::cout << "Battle stats ______________________________________________________" << std::endl
+              << std::endl;
+
+    for (int distance = 50; distance <= 500 && !npc_set.empty(); distance += 50) {
+        set_t killed_list;
+        std::cout << "distance: " << distance << std::endl;
+        for (std::shared_ptr<NPC> attacker : npc_set) {
+            for (std::shared_ptr<NPC> defender : npc_set) {
+                if (attacker != defender && attacker->alive() && defender->alive() && attacker->near(defender, distance)) {
+                    if (defender->accept(attacker)) {
+                        killed_list.insert(defender);
+                    }
+                }
+            }
+        }
+
+        for (auto &npc : killed_list) {
+            npc_set.erase(npc);
+        }
+        std::cout << "-> killed: " << killed_list.size() << std::endl
+                  << std::endl;
+    }
+
+    std::cout << "____________________________________________________________________" << std::endl
+              << std::endl;
+
+    std::cout << "Survivors:\n"
+              << npc_set << std::endl;
 }

@@ -1,39 +1,40 @@
 cmake_minimum_required(VERSION 3.10)
-project(lab0)
-
+project(LAB6)
 set(CMAKE_CXX_STANDARD 20)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-add_compile_options(-g -rdynamic)
-
+# Подключение Google Test
 add_subdirectory(lib/googletest)
 
+# Определение директорий с исходными файлами и заголовочными файлами
 set(INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
+set(SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src/lab0)
 
-include_directories(${INCLUDE_DIR})
+# Собираем список всех исходных файлов и заголовочных файлов
+file(GLOB SOURCES ${SOURCE_DIR}/*.cpp)
+file(GLOB HEADERS ${INCLUDE_DIR}/*.hpp)
 
-set(SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
+# Создание основного исполняемого файла из main.cpp
+add_executable(${PROJECT_NAME} main.cpp ${SOURCES} ${HEADERS})
+target_include_directories(${PROJECT_NAME} PRIVATE ${INCLUDE_DIR} ${gtest_SOURCE_DIR}/include)
 
+# Включение тестирования
+enable_testing()
+
+# Создание тестовых исполняемых файлов для каждого теста
 set(TEST_DIR ${CMAKE_CURRENT_SOURCE_DIR}/test)
 
-file(GLOB_RECURSE SOURCES LIST_DIRECTORIES false ${SOURCE_DIR}/*.cpp)
+# Factory Test
+add_executable(test_factory ${TEST_DIR}/test_factory.cpp ${HEADERS} ${SOURCES})
+target_link_libraries(test_factory gtest gtest_main)
 
-file(GLOB_RECURSE TEST_SOURCES LIST_DIRECTORIES false ${TEST_DIR}/*.cpp)
+# Knight Test
+add_executable(test_knight ${TEST_DIR}/test_knight.cpp ${HEADERS} ${SOURCES})
+target_link_libraries(test_knight gtest gtest_main)
 
-add_library(${CMAKE_PROJECT_NAME}_lib ${SOURCES})
+# Squirrel Test
+add_executable(test_squirrel ${TEST_DIR}/test_squirrel.cpp ${HEADERS} ${SOURCES})
+target_link_libraries(test_squirrel gtest gtest_main)
 
-add_executable(${CMAKE_PROJECT_NAME}_exe main.cpp)
-
-target_link_libraries(${CMAKE_PROJECT_NAME}_exe PRIVATE ${CMAKE_PROJECT_NAME}_lib)
-
-add_executable(${CMAKE_PROJECT_NAME}_test ${TEST_SOURCES})
-
-target_include_directories(${CMAKE_PROJECT_NAME}_test PRIVATE ${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
-
-target_link_libraries(${CMAKE_PROJECT_NAME}_test PRIVATE ${CMAKE_PROJECT_NAME}_lib gtest gtest_main)
-
-add_executable(test_allocator ${TEST_DIR}/test_allocator.cpp)
-target_link_libraries(test_allocator PRIVATE ${CMAKE_PROJECT_NAME}_lib gtest gtest_main)
-
-add_executable(test_list ${TEST_DIR}/test_list.cpp)
-target_link_libraries(test_list PRIVATE ${CMAKE_PROJECT_NAME}_lib gtest gtest_main)
+# Merchant Test
+add_executable(test_merchant ${TEST_DIR}/test_merchant.cpp ${HEADERS} ${SOURCES})
+target_link_libraries(test_merchant gtest gtest_main)
