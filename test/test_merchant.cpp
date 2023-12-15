@@ -1,0 +1,7 @@
+#include "gtest/gtest.h"
+#include "../include/factory.hpp"
+#include "../include/knight.hpp"
+#include "../include/merchant.hpp"
+#include "../include/observer.hpp"
+#include "../include/squirrel.hpp"
+#include "bits/stdc++.h"
