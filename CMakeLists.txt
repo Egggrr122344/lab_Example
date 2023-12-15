@@ -32,14 +32,8 @@ target_include_directories(${CMAKE_PROJECT_NAME}_test PRIVATE ${gtest_SOURCE_DIR
 
 target_link_libraries(${CMAKE_PROJECT_NAME}_test PRIVATE ${CMAKE_PROJECT_NAME}_lib gtest gtest_main)
 
-add_executable(Octagon_test ${TEST_DIR}/Octagon_test.cpp)
-target_link_libraries(Octagon_test PRIVATE ${CMAKE_PROJECT_NAME}_lib gtest gtest_main)
+add_executable(test_allocator ${TEST_DIR}/test_allocator.cpp)
+target_link_libraries(test_allocator PRIVATE ${CMAKE_PROJECT_NAME}_lib gtest gtest_main)
 
-add_executable(Triangle_test ${TEST_DIR}/Triangle_test.cpp)
-target_link_libraries(Triangle_test PRIVATE ${CMAKE_PROJECT_NAME}_lib gtest gtest_main)
-
-add_executable(Hexagon_test ${TEST_DIR}/Hexagon_test.cpp)
-target_link_libraries(Hexagon_test PRIVATE ${CMAKE_PROJECT_NAME}_lib gtest gtest_main)
-
-add_executable(Point_test ${TEST_DIR}/Point_test.cpp)
-target_link_libraries(Point_test PRIVATE ${CMAKE_PROJECT_NAME}_lib gtest gtest_main)
+add_executable(test_list ${TEST_DIR}/test_list.cpp)
+target_link_libraries(test_list PRIVATE ${CMAKE_PROJECT_NAME}_lib gtest gtest_main)
