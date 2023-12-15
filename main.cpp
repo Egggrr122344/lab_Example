@@ -1,10 +1,10 @@
 #include "bits/stdc++.h"
-#include "include/factory.hpp"
-#include "include/knight.hpp"
-#include "include/merchant.hpp"
-#include "include/observer.hpp"
-#include "include/squirrel.hpp"
-#include "include/npc.hpp"
+#include "/com.docker.devenvironments.code/include/factory.hpp"
+#include "/com.docker.devenvironments.code/include/knight.hpp"
+#include "/com.docker.devenvironments.code/include/merchant.hpp"
+#include "/com.docker.devenvironments.code/include/npc.hpp"
+#include "/com.docker.devenvironments.code/include/squirrel.hpp"
+#include "/com.docker.devenvironments.code/include/npc.hpp"
 
 std::ostream &operator<<(std::ostream &out, const set_t &s) {
     for (auto npc : s) {

@@ -5,7 +5,7 @@ build: clean-build
 	cd build && cmake .. && make
 
 run:
-	./build/${PROJECT_NAME}
+	./build/LAB6
 
 test_factory:
 	./build/test_factory
