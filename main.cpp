@@ -1,5 +1,10 @@
 #include "bits/stdc++.h"
 #include "/com.docker.devenvironments.code/include/factory.hpp"
+#include "/com.docker.devenvironments.code/include/knight.hpp"
+#include "/com.docker.devenvironments.code/include/merchant.hpp"
+#include "/com.docker.devenvironments.code/include/npc.hpp"
+#include "/com.docker.devenvironments.code/include/squirrel.hpp"
+#include "/com.docker.devenvironments.code/include/npc.hpp"
 #include "/com.docker.devenvironments.code/include/fight.hpp"
 
 std::ostream &operator<<(std::ostream &out, const set_t &s) {
@@ -10,21 +15,18 @@ std::ostream &operator<<(std::ostream &out, const set_t &s) {
 }
 
 int main() {
-    const int MAX_X{100}, MAX_Y{100}, npc_num{50};
     set_t npc_set;
     NPCFactory factory;
     std::shared_ptr<Observer> console_observer, file_observer;
     console_observer = std::make_shared<ConsoleObserver>();
     file_observer = std::make_shared<FileObserver>();
-    std::srand(std::time(0));
 
     std::cout << "Generating ..." << std::endl
               << std::endl;
-
-    for (size_t i = 0; i < npc_num; ++i) {
+    for (size_t i = 0; i < 100; ++i) {
         std::shared_ptr<NPC> cur_npc = factory.createNPC(NPC_type(std::rand() % 3 + 1),
-                                                         std::rand() % MAX_X,
-                                                         std::rand() % MAX_Y);
+                                                         std::rand() % 500 + 1,
+                                                         std::rand() % 500 + 1);
 
         cur_npc->attach(console_observer);
         cur_npc->attach(file_observer);
@@ -44,115 +46,32 @@ int main() {
 
     std::cout << "Fighting ..." << std::endl
               << std::endl;
-    std::cout << "Battle stats ________________________________________________________________" << std::endl
+    std::cout << "Battle stats ______________________________________________________" << std::endl
               << std::endl;
 
-    std::thread fight_thread(std::ref(FightManager::get()));
-
-    std::thread move_thread([&npc_set, MAX_X, MAX_Y]() {
-            while (!stop_flag) {
-                for (std::shared_ptr<NPC> npc : npc_set) {
-                        if(npc->alive()) {
-                            npc->move(MAX_X - 1, MAX_Y - 1);
-                        }
-                }
-                for (std::shared_ptr<NPC> defender : npc_set) {
-                    for (std::shared_ptr<NPC> attacker : npc_set) {
-                        if (defender != attacker && defender->alive() && attacker->alive() && defender->near(attacker, attacker->get_damage_range())) {
-                            FightManager::get().add_event({defender, attacker});
-                        }
-                    }
-                }
-                std::this_thread::sleep_for(1s);
-            } });
-
-    int run_time{30};
-    while (run_time--) {
-        size_t grid{20}, survived{0};
-        std::vector<std::vector<std::string>> map(grid, std::vector<std::string>(grid, "0"));
-        {
-            std::lock_guard<std::mutex> lck(print_mutex);
-
-            for (std::shared_ptr<NPC> npc : npc_set) {
-                std::string type = npc->get_type();
-                int x = npc->get_x() / 5, y = npc->get_y() / 5;
-                if (npc->alive()) {
-                    if (map[x][y] == "0" || map[x][y] == ".") {
-                        if (type == "Knight") {
-                            map[x][y] = "K";
-                        } else if (type == "Merchant") {
-                            map[x][y] = "M";
-                        } else if (type == "Squirrel") {
-                            map[x][y] = "S";
-                        }
-                    } else if (map[x][y] == "K" || map[x][y] == "M" || map[x][y] == "S") {
-                        map[x][y] = "2";
-                    } else {
-                        map[x][y] = std::to_string(std::stoi(map[x][y]) + 1);
-                    }
-                    ++survived;
-                } else {
-                    if (map[x][y] == "0") {
-                        map[x][y] = ".";
+    for (int distance = 50; distance <= 500 && !npc_set.empty(); distance += 50) {
+        set_t killed_list;
+        std::cout << "distance: " << distance << std::endl;
+        for (std::shared_ptr<NPC> attacker : npc_set) {
+            for (std::shared_ptr<NPC> defender : npc_set) {
+                if (attacker != defender && attacker->alive() && defender->alive() && attacker->near(defender, distance)) {
+                    if (defender->accept(attacker)) {
+                        killed_list.insert(defender);
                     }
                 }
             }
-
-            std::cout << "Survived: " << survived << " | Killed: " << npc_num - survived << std::endl;
-
-            std::cout << "   ";
-            for (size_t i = 0; i < grid; ++i) {
-                if (i < 10) {
-                    std::cout << "  " << i << " ";
-                } else {
-                    std::cout << " " << i << " ";
-                }
-            }
-            std::cout << std::endl;
-
-            for (size_t i = 0; i < grid; ++i) {
-                if (i < 10) {
-                    std::cout << i << "  ";
-                } else {
-                    std::cout << i << " ";
-                }
-
-                for (size_t j = 0; j < grid; ++j) {
-                    std::string str = map[i][j];
-                    if (str != "0") {
-                        if (str.size() == 1) {
-                            std::cout << "[ " << str << "]";
-                        } else {
-                            std::cout << "[" << str << "]";
-                        }
-                    } else {
-                        std::cout << "[  ]";
-                    }
-                }
-                std::cout << std::endl;
-            }
-            std::cout << std::endl
-                      << "Timer: " << run_time << "s" << std::endl;
         }
-        if (run_time == 1) {
-            stop_flag = true;
+
+        for (auto &npc : killed_list) {
+            npc_set.erase(npc);
         }
-        std::this_thread::sleep_for(1s);
+        std::cout << "-> killed: " << killed_list.size() << std::endl
+                  << std::endl;
     }
 
-    move_thread.join();
-    fight_thread.join();
-
-    std::cout << "______________________________________________________________________________" << std::endl
+    std::cout << "____________________________________________________________________" << std::endl
               << std::endl;
 
-    std::cout << "Survivors:" << std::endl;
-
-    for (std::shared_ptr<NPC> npc : npc_set) {
-        if (npc->alive()) {
-            std::cout << *npc.get() << std::endl;
-        }
-    }
-
-    return 0;
+    std::cout << "Survivors:\n"
+              << npc_set << std::endl;
 }
