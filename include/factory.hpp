@@ -1,10 +1,4 @@
 #pragma once
-#include <fstream>
-
-#include "knight.hpp"
-#include "merchant.hpp"
-#include "npc.hpp"
-#include "squirrel.hpp"
 #include "observer.hpp"
 
 class NPCFactory {
@@ -15,4 +9,3 @@ public:
     void save(const set_t& s, const std::string& file_name);
     set_t load(const std::string& file_name);
 };
-

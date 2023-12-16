@@ -1,18 +1,19 @@
 #pragma once
-
 #include <fstream>
 #include <memory>
+#include <shared_mutex>
 
 #include "knight.hpp"
 #include "merchant.hpp"
-#include "npc.hpp"
 #include "squirrel.hpp"
+
+extern std::mutex print_mutex, file_mutex;
 
 class ConsoleObserver : public Observer {
 public:
     ConsoleObserver() = default;
 
-    void report_killed(const NPC& attacker, const NPC& defender) override;
+    void report_killed(const std::shared_ptr<NPC> attacker, const std::shared_ptr<NPC> defender) override;
 };
 
 class FileObserver : public Observer {
@@ -21,6 +22,5 @@ class FileObserver : public Observer {
 public:
     FileObserver() : os(std::ofstream("battle_stats.txt")) {}
 
-    void report_killed(const NPC& attacker, const NPC& defender) override;
+    void report_killed(const std::shared_ptr<NPC> attacker, const std::shared_ptr<NPC> defender) override;
 };
-

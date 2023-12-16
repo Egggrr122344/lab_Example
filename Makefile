@@ -19,5 +19,8 @@ test_squirrel:
 test_merchant:
 	./build/test_merchant
 
+test_fight:
+	./build/test_fight
+
 clean-build:
 	rm -rf ./build/

@@ -24,9 +24,9 @@ void NPCFactory::save(const set_t& s, const std::string& file_name) {
     std::ofstream out(file_name);
     out << s.size() << std::endl;
     for (auto& npc : s) {
-        out << npc->getType() << std::endl
-            << npc->getX() << std::endl
-            << npc->getY() << std::endl;
+        out << npc->get_type() << std::endl
+            << npc->get_x() << std::endl
+            << npc->get_y() << std::endl;
     }
 
     out.flush();

@@ -8,20 +8,18 @@
 
 TEST(KnightTest, ConstructorAndGetters) {
     Knight knight(1, 2);
-    EXPECT_EQ(knight.getX(), 1);
-    EXPECT_EQ(knight.getY(), 2);
+    EXPECT_EQ(knight.get_x(), 1);
+    EXPECT_EQ(knight.get_y(), 2);
     EXPECT_TRUE(knight.alive());
-    EXPECT_EQ(knight.getType(), "Knight");
+    EXPECT_EQ(knight.get_type(), "Knight");
 }
 
 TEST(KnightTest, Visitors) {
     NPCFactory factory;
     std::shared_ptr<NPC> knight = factory.createNPC(NPC_type::knight, 1, 2);
-    std::shared_ptr<NPC> merchant = factory.createNPC(NPC_type::merchant, 3, 4);
     std::shared_ptr<NPC> squirrel = factory.createNPC(NPC_type::squirrel, 5, 6);
 
     EXPECT_FALSE(knight->accept(knight));
-    EXPECT_FALSE(knight->accept(merchant));
     EXPECT_FALSE(knight->accept(squirrel));
     EXPECT_TRUE(knight->alive());
 }

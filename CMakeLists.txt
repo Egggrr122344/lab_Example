@@ -38,3 +38,6 @@ target_link_libraries(test_squirrel gtest gtest_main)
 # Merchant Test
 add_executable(test_merchant ${TEST_DIR}/test_merchant.cpp ${HEADERS} ${SOURCES})
 target_link_libraries(test_merchant gtest gtest_main)
+
+add_executable(test_fight ${TEST_DIR}/test_fight.cpp ${HEADERS} ${SOURCES})
+target_link_libraries(test_fight gtest gtest_main)

@@ -64,20 +64,20 @@ TEST(NPCTest, Getters) {
     std::shared_ptr<NPC> merchant = factory.createNPC(NPC_type::merchant, 3, 4);
     std::shared_ptr<NPC> squirrel = factory.createNPC(NPC_type::squirrel, 5, 6);
 
-    EXPECT_EQ(knight->getType(), "Knight");
-    EXPECT_EQ(merchant->getType(), "Merchant");
-    EXPECT_EQ(squirrel->getType(), "Squirrel");
+    EXPECT_EQ(knight->get_type(), "Knight");
+    EXPECT_EQ(merchant->get_type(), "Merchant");
+    EXPECT_EQ(squirrel->get_type(), "Squirrel");
 
     EXPECT_TRUE(knight->alive());
     EXPECT_TRUE(merchant->alive());
     EXPECT_TRUE(squirrel->alive());
 
-    EXPECT_EQ(knight->getX(), 1);
-    EXPECT_EQ(merchant->getX(), 3);
-    EXPECT_EQ(squirrel->getX(), 5);
-    EXPECT_EQ(knight->getY(), 2);
-    EXPECT_EQ(merchant->getY(), 4);
-    EXPECT_EQ(squirrel->getY(), 6);
+    EXPECT_EQ(knight->get_x(), 1);
+    EXPECT_EQ(merchant->get_x(), 3);
+    EXPECT_EQ(squirrel->get_x(), 5);
+    EXPECT_EQ(knight->get_y(), 2);
+    EXPECT_EQ(merchant->get_y(), 4);
+    EXPECT_EQ(squirrel->get_y(), 6);
 }
 
 TEST(NPCTest, Near) {
